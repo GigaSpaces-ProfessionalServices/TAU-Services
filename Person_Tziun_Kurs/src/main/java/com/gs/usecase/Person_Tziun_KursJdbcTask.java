@@ -43,10 +43,9 @@ public class Person_Tziun_KursJdbcTask extends GeneralTask<Person_Tziun_KursRequ
             "        tlkr.K_SIDURI_TOAR =tl.K_SIDURI_TOAR AND\n" +
             "        pr.K_PNIMI=tl.K_PNIMI and\n" +
             "        pr.TALMID in ('01') AND" +
-            "        pr.IDNO = %s\n";
-//            "        pr.IDNO = %s AND\n" +
-//            "        tlkr.SEM_KVUTZA like %s%\n" +
-//            "        ORDER BY tlkr.K_SEM,tlkr.K_KURS";
+            "        pr.IDNO = '%s'\n" +
+//            "        tlkr.SEM_KVUTZA like '%s'%\n";
+            "        ORDER BY tlkr.K_SEM,tlkr.K_KURS";
 
     @Override
     public Integer routing() {
@@ -63,20 +62,14 @@ public class Person_Tziun_KursJdbcTask extends GeneralTask<Person_Tziun_KursRequ
         try (Connection con = DriverManager.getConnection(properties.getProperty("driverurl"))) {
 
             logger.info("Got connection");
-
             Statement stmt = con.createStatement();
-
             logger.info("##### 1 #####");
-
             ResultSet resultSet = null;
-
             logger.info("##### 2 #####");
 
             try {
                  resultSet = stmt.executeQuery(query);
-
                 logger.info("##### 3 #####");
-
             }catch(Exception e){
                 logger.info("##### 4 Got Exception #####");
             }
@@ -86,7 +79,6 @@ public class Person_Tziun_KursJdbcTask extends GeneralTask<Person_Tziun_KursRequ
             while (resultSet.next()) {
 
                 logger.info("##### 6 #####");
-
 
                 // Compute each field from the result set
                 Person_Tziun_KursResponse response = new Person_Tziun_KursResponse(resultSet);
