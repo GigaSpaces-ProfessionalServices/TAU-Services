@@ -71,16 +71,22 @@ public class Person_Tziun_KursJdbcTask extends GeneralTask<Person_Tziun_KursRequ
                  resultSet = stmt.executeQuery(query);
                 logger.info("##### 3 #####");
             }catch(Exception e){
-                logger.info("##### 4 Got Exception #####");
+                logger.info("##### 4 Got Exception ##### " + e);
             }
 
             logger.info("##### 5 #####");
 
+            if (resultSet == null) {
+                logger.info("##### 6 ##### resultSet is null");
+                return responseList;
+            }
+
+            logger.info("##### 7 #####");
+
             while (resultSet.next()) {
 
-                logger.info("##### 6 #####");
+                logger.info("##### 8 #####");
 
-                // Compute each field from the result set
                 Person_Tziun_KursResponse response = new Person_Tziun_KursResponse(resultSet);
                 responseList.add(response);
             }
