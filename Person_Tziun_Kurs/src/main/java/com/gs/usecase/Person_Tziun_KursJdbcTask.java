@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class Person_Tziun_KursJdbcTask extends GeneralTask<Person_Tziun_KursRequest, Person_Tziun_KursResponse> implements Task<ArrayList<Person_Tziun_KursResponse>> {
     private static final Logger logger = LoggerFactory.getLogger(Person_Tziun_KursResponse.class);
 
-    static private final String USECASE_QUERY ="SELECT tlkr.K_PNIMI,pr.IDNO,pr.SHEM_MISHP,pr.SHEM_PRATI SHEM, pr.SHEM_MISHP_ENG,pr.SHEM_PRATI_ENG SHEN_ENG,\n" +
+    static private final String USECASE_QUERY ="SELECT tlkr.K_PNIMI,pr.IDNO,pr.SHEM_MISHP,pr.SHEM_PRATI, pr.SHEM_MISHP_ENG,pr.SHEM_PRATI_ENG,\n" +
             "                tl.CHUG, tl.TOAR, tl.OFEN_LIMUD,tl.MASLUL,\n" +
             "                tlkr.K_SEM,tlkr.K_KURS,tlkr.KVUTZA,\n" +
             "                tlkr.SEM_KVUTZA,\n" +
@@ -21,10 +21,10 @@ public class Person_Tziun_KursJdbcTask extends GeneralTask<Person_Tziun_KursRequ
             "                tlkr.TZIUN_SOFI,tlkr.KOD_TZIUN,tlkr.MOED_KOVEA,tlkr.MATZAV_TZIUN,tlkr.PTOR,tlkr.LSHKLL,\n" +
             "                tlkr.HUSHLAM,tlkr.CHOZER,tlkr.KOVEA,tlkr.SHAOT_UNI,tlkr.MISHKAL,tlkr.SHAOT_SCL,\n" +
             "                kr.TEUR_K, kr.TEUR_ENG_K, kr.TEUR_KURS,kr.TEUR_ENG,\n" +
-            "                kr.SHAOT_UNI SHAOT_KURS,kr.MISHKAL MISHKAL_KURS,kr.LSHKLL LSHKLL_KURS,\n" +
-            "                kr.OFEN_HORAA1,t002.TEUR_K1 TEUR_OFEN,t002.TEUR_ENG_K1 TEUR_OFEN_ENG,\n" +
-            "                t071.TEUR TEUR_TZIUN, t071.TEUR_ENG TEUR_TZIUN_ENG,\n" +
-            "                t036.TEUR TEUR_MATZAV_TZIUN\n" +
+            "                kr.SHAOT_UNI,kr.MISHKAL,kr.LSHKLL,\n" +
+            "                kr.OFEN_HORAA1,t002.TEUR_K1,t002.TEUR_ENG_K1,\n" +
+            "                t071.TEUR, t071.TEUR_ENG,\n" +
+            "                t036.TEUR\n" +
             "        FROM    STUD.TA_PERSON pr,\n" +
             "                STUD.TL_TOCHNIT tl,\n" +
             "                STUD.TL_KURS tlkr,\n" +
@@ -33,18 +33,18 @@ public class Person_Tziun_KursJdbcTask extends GeneralTask<Person_Tziun_KursRequ
             "                STUD.TB_036_MATZAV_TZIUN t036,\n" +
             "                STUD.TB_002_OFEN_HORAA t002\n" +
             "        WHERE tlkr.MEVUTAL='0' AND\n" +
-            "        tlkr.K_KURS=kr.K_KURS AND\n" +
-//            "                (tlkr.K_SEM BETWEEN kr.K_ME_SEM AND kr.AD_SEM) AND\n" +
+  //          "        tlkr.K_KURS=kr.K_KURS AND\n" +   // when its on, the query return nothing
+            "                (tlkr.K_SEM >= kr.K_ME_SEM AND tlkr.K_SEM <= kr.AD_SEM) AND\n" +
             "        kr.OFEN_HORAA1=t002.K_CODE AND\n" +
             "        tlkr.KOD_TZIUN=t071.K_CODE AND\n" +
-            "        tlkr.MATZAV_TZIUN=t036.K_CODE AND\n" +
+ //           "        tlkr.MATZAV_TZIUN=t036.K_CODE AND\n" +   // when its on, the query return nothing
             "        tlkr.K_PNIMI=tl.K_PNIMI AND\n" +
             "        tlkr.K_SIDURI_TOCHNIT=tl.K_SIDURI_TOCHNIT AND\n" +
             "        tlkr.K_SIDURI_TOAR =tl.K_SIDURI_TOAR AND\n" +
             "        pr.K_PNIMI=tl.K_PNIMI and\n" +
-            "        pr.TALMID in ('01') AND" +
-            "        pr.IDNO = '%s'\n" +
-//            "        tlkr.SEM_KVUTZA like '%s'%\n";
+            "        pr.TALMID in ('01') AND\n" +
+            "        pr.IDNO = '%s' AND\n" +
+            "        tlkr.SEM_KVUTZA like '%s'\n" +
             "        ORDER BY tlkr.K_SEM,tlkr.K_KURS";
 
     @Override
@@ -66,6 +66,7 @@ public class Person_Tziun_KursJdbcTask extends GeneralTask<Person_Tziun_KursRequ
             logger.info("##### 1 #####");
             ResultSet resultSet = null;
             logger.info("##### 2 #####");
+            logger.info("query = " + query);
 
             try {
                  resultSet = stmt.executeQuery(query);
@@ -84,8 +85,6 @@ public class Person_Tziun_KursJdbcTask extends GeneralTask<Person_Tziun_KursRequ
             logger.info("##### 7 #####");
 
             while (resultSet.next()) {
-
-                logger.info("##### 8 #####");
 
                 Person_Tziun_KursResponse response = new Person_Tziun_KursResponse(resultSet);
                 responseList.add(response);
