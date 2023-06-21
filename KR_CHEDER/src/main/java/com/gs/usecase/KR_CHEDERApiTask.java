@@ -25,35 +25,11 @@ public class KR_CHEDERApiTask extends GeneralTask<KR_CHEDERRequest, KR_CHEDERRes
         String query = null;
         String binyan = request.getK_BINYAN();
         String misCheder = request.getK_MIS_CHEDER();
-        String transactionId = request.getTransactionId();
 
         ArrayList responseList = new ArrayList<>();
 
-        if (transactionId == null) {
-            responseList.add(new ErrorServiceResponse("Invalid or missing request header", "400", "Error: Missing: 'x-transaction-id' header"));
 
-            logger_service.error(LogBuilder.get()
-                    .instantiateHttpRequest()
-                    .nullHttpResponse()
-                    .nullError()
-                    .setRequestMessage("Query: binyan = " + binyan + " mispar cheder = " + misCheder)
-                    .setLevel(LogMessage.Level.ERROR)
-                    .setTimestamp(new Date(System.currentTimeMillis()))
-                    .createLogMessage());
-
-            logger_service.error(LogBuilder.get()
-                    .instantiateHttpResponse()
-                    .nullHttpRequest()
-                    .instantiateError()
-                    .setErrorCode(400)
-                    .setLevel(LogMessage.Level.ERROR)
-                    .setTimestamp(new Date(System.currentTimeMillis()))
-                    .setErrorMessage("Invalid or missing request header: Error: Missing: 'x-transaction-id' header")
-                    .createLogMessage());
-
-            return responseList;
-
-        }else if (binyan == null && misCheder != null) {
+        if (binyan == null && misCheder != null) {
             responseList.add(new ErrorServiceResponse("Invalid keys", "400", "keys: K_BINYAN - NaN, K_MIS_CHEDER - " + misCheder));
 
             logger_service.error(LogBuilder.get()

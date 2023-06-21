@@ -77,6 +77,12 @@
             <version>${slf4j.version}</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.gigaspaces</groupId>
+            <artifactId>xap-jdbc</artifactId>
+            <version>${gs.version}</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>

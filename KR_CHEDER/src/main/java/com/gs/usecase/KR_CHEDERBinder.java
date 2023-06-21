@@ -18,7 +18,6 @@ public class KR_CHEDERBinder implements RequestBinder {
         KR_CHEDERRequest requestFromHeaders = new KR_CHEDERRequest();
         requestFromHeaders.setK_BINYAN(request.queryParams("K_BINYAN"));
         requestFromHeaders.setK_MIS_CHEDER(request.queryParams("K_MIS_CHEDER"));
-        requestFromHeaders.setTransactionId(request.headers(Const.TRANSACTION_ID_HEADER));
 
        return requestFromHeaders;
     }

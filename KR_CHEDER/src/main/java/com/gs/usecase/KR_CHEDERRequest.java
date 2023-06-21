@@ -6,7 +6,6 @@ public class KR_CHEDERRequest implements ServiceRequest {
 
     private String K_BINYAN;
     private String K_MIS_CHEDER;
-    private String transactionId;
 
     public String getK_BINYAN() {
         return K_BINYAN;
@@ -24,11 +23,4 @@ public class KR_CHEDERRequest implements ServiceRequest {
         K_MIS_CHEDER = k_MIS_CHEDER;
     }
 
-    public String getTransactionId() {
-        return transactionId;
-    }
-
-    public void setTransactionId(String transactionId) {
-        this.transactionId = transactionId;
-    }
 }
