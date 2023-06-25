@@ -1,14 +1,7 @@
 pipeline {
+    
     agent any
-    parameters {
-        string description: 'Enter the GIT branch name for this build', name: 'branch_name'
-        string description: 'Enter a build number (e.g. 1.11.0)', name: 'build_num'
-    }
-    environment {
-        SERVICE_NAME = 'Person_Tziun_Kurs'
-        SPACE = '10.0.1.106'
-        MANAGER = '10.0.1.250'
-    }
+    
     stages {
         // stage('Build') {
         //     steps {
