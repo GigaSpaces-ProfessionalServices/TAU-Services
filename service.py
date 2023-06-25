@@ -215,12 +215,25 @@ if __name__ == '__main__':
         opt = sys.argv[1]
         env_name = sys.argv[2]
         service = sys.argv[3]
+    
+    # parse environment
+    if env_name == "Development":
+        env_key = 'DEV'
+    elif env_name == "Stage":
+        env_key = 'STG'
+    elif env_name == "Production":
+        env_key = 'PRD'
+    else:
+        env_key = ''
 
     # get pivot for selected env_name
+    if env_key == '':
+        print("error: invalid env name specified. check service.py configuration.")
+        exit(1)
     with open('/etc/environment', 'r', encoding='utf-8') as env_file:
         for line in env_file:
             l = line.rstrip('\n')
-            if re.search(env_name, l):
+            if re.search(env_key, l):
                 pivot = l.split('=')[1]
     if pivot == "":
         print("pivot is not set in /etc/environment for selected env_name")
