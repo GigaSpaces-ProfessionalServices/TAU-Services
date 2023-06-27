@@ -71,14 +71,6 @@ def is_rest_ok(manager):
         return False
 
 
-def get_space_hosts(manager):
-    h = {'Accept': 'application/json'}
-    url = f'http://{manager}:8090/v2/hosts'
-    all_hosts = [h['name'] for h in requests.get(url, headers=h, verify=False).json()]
-    space_hosts = [h for h in all_hosts if h not in MANAGER_HOSTS]
-    return space_hosts
-
-
 def undeploy_service():
     # undeploy pu
     base_url = f'http://{manager}:8090/v2/pus'
@@ -243,17 +235,19 @@ if __name__ == '__main__':
     cmd = f"sudo su - root -c \"ssh {pivot} 'cat \$ENV_CONFIG/host.yaml'\""
     hosts = yaml.safe_load(subprocess.run(cmd, shell=True, stdout=subprocess.PIPE).stdout.decode())
     
-    # parse management hosts and operational manager
+    # parse management hosts and set operational manager
     MANAGER_HOSTS = [m for m in hosts['servers']['manager'].values()]
     if len(MANAGER_HOSTS) == 0:
         print("[ERROR] DIH managers not defined. check host.yaml configuration on pivot host.")
         exit(1)
-    else:
-        restful_managers = [m for m in MANAGER_HOSTS if is_rest_ok(m)]
-        manager = restful_managers[0]
-    
+    restful_managers = [m for m in MANAGER_HOSTS if is_rest_ok(m)]
+    manager = restful_managers[0]
+
     # parse space hosts
-    SPACE_HOSTS = get_space_hosts(manager)
+    SPACE_HOSTS = [m for m in hosts['servers']['space'].values()]
+    if len(SPACE_HOSTS) == 0:
+        print("[ERROR] DIH spaces not defined. check host.yaml configuration on pivot host.")
+        exit(1)
     
     if opt == 'deploy':
         deploy_service()
