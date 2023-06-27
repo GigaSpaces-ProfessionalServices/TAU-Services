@@ -42,12 +42,17 @@ pipeline {
             }
         }    
     
-        stage('Deploy') {
+        stage('Undeploy') {
             steps {
                 sh "sudo chmod +x service.py"
                 sh "python3 -u service.py undeploy ${ENVIRONMENT} ${BRANCH}"
+            }
+        }
+        
+        stage('Deploy') {
+            steps {
                 sh "python3 -u service.py deploy ${ENVIRONMENT} ${BRANCH}"
             }
         }
-    }
+    }   
 }
