@@ -25,21 +25,6 @@ pipeline {
             type: 'PT_BRANCH'
             )
 
-        gitParameter (
-            branch: '', 
-            branchFilter: '.*', 
-            defaultValue: '', 
-            description: 'Choose the target revision', 
-            listSize: '0', 
-            name: 'REVISION', 
-            quickFilterEnabled: false, 
-            requiredParameter: true, 
-            selectedValue: 'NONE', 
-            sortMode: 'NONE', 
-            tagFilter: '*', 
-            type: 'PT_REVISION'
-            )
-
         string (
             description: 'Enter a build number (e.g. 1.12.4)', 
             name: 'BUILD', 
