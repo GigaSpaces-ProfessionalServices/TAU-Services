@@ -45,7 +45,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh "sudo chmod +x service.py"
-                sh "python -u service.py undeploy ${ENVIRONMENT} ${BRANCH}"
+                sh "python3 -u service.py undeploy ${ENVIRONMENT} ${BRANCH}"
                 sh "./service.py deploy ${ENVIRONMENT} ${BRANCH}"
             }
         }
