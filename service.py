@@ -94,20 +94,20 @@ def undeploy_service():
                     break
                 count += 1
                 sleep(1)
-        print(f"operation: {get_request_desc(del_pu_data.text)} (id: {del_pu_data.text})")
+        print(f"operation: {get_request_desc(del_pu_data.text)} (id: {del_pu_data.text})", flush=True)
         if status:
             while pu_exist(service):
                 sleep(1)
-            print("undeploy processing unit: SUCCESS")
+            print("undeploy processing unit: SUCCESS", flush=True)
         else:
-            print("undeploy processing unit: FAIL")
+            print("undeploy processing unit: FAIL", flush=True)
     else:
-        print("processing unit does not exist. skipping.")
+        print("processing unit does not exist. skipping.", flush=True)
 
     # kill containers
     containers = get_service_containers(service)
     if len(containers) == 0:
-        print(f"no containers found for service '{service}'")
+        print(f"no containers found for service '{service}'", flush=True)
     else:
         count, limit = 0, 3
         while count < limit:        
@@ -117,14 +117,14 @@ def undeploy_service():
                 for id in containers:
                     del_cont_data = requests.delete(f"{base_url}/{id}", headers=h, verify=False)
                     sleep(1)
-                    print(f"operation: {get_request_desc(del_cont_data.text)} (id: {del_cont_data.text})")
+                    print(f"operation: {get_request_desc(del_cont_data.text)} (id: {del_cont_data.text})", flush=True)
             else:
-                print(f"delete all containers for service '{service}': SUCCESS")
+                print(f"delete all containers for service '{service}': SUCCESS", flush=True)
                 break
             containers = get_service_containers(service)
             count += 1
         if count == limit:
-            print(f"delete all containers for service '{service}': FAIL (timeout exceeded)")
+            print(f"delete all containers for service '{service}': FAIL (timeout exceeded)", flush=True)
 
     # delete resource
     h = {'Accept': 'application/json'}
@@ -135,14 +135,14 @@ def undeploy_service():
         h = {'Accept': 'text/plain'}
         del_resource_data = requests.delete(f"{base_url}/resources/{resource_name}", headers=h, verify=False)
         sleep(1)
-        print(f"operation: {get_request_desc(del_resource_data.text)} (id: {del_resource_data.text})")
+        print(f"operation: {get_request_desc(del_resource_data.text)} (id: {del_resource_data.text})", flush=True)
         if int(del_resource_data.status_code) in range(200,300):
-            print(f"delete resource '{resource_name}': SUCCESS")
+            print(f"delete resource '{resource_name}': SUCCESS", flush=True)
         if int(del_resource_data.status_code) in range(400, 500):
             if del_resource_data.status_code == 423:
-                print(f"delete resource '{resource_name}': FAIL (resource is currently in use)")
+                print(f"delete resource '{resource_name}': FAIL (resource is currently in use)", flush=True)
     else:
-        print(f"no resources found for service '{service}'")
+        print(f"no resources found for service '{service}'", flush=True)
     print()
 
 
