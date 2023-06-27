@@ -13,11 +13,15 @@ import com.j_spaces.core.client.SQLQuery;
 import static java.lang.String.format;
 
 
+/*
+This class is not in use. We are using JDBC
+ */
 public class Person_Tziun_KursApiTask extends GeneralTask<Person_Tziun_KursRequest, Person_Tziun_KursResponse> implements Task<ArrayList<Person_Tziun_KursResponse>> {
 
     private static final Logger logger_service = org.slf4j.LoggerFactory.getLogger(Person_Tziun_KursApiTask.class);
 //    private static final Logger logger_service = tau.ods.gs.model.logging.LoggerFactory.getLogger(Person_Tziun_KursApiTask.class);
     static private final String type = "STUD.Person_Tziun_Kurs";
+
 
     public ArrayList execute() {
 
@@ -151,14 +155,14 @@ public class Person_Tziun_KursApiTask extends GeneralTask<Person_Tziun_KursReque
 
         if (idno.equals("null")){
 
-            USECASE_QUERY = "K_BINYAN" + " = %s ";
+            USECASE_QUERY = "idno" + " = %s ";
 
             query = format(USECASE_QUERY,
                     request.getPERSON_IDNO());
 
         }else {
 
-            USECASE_QUERY = "K_BINYAN" + " = %s AND K_MIS_CHEDER = %s";
+            USECASE_QUERY = "idno" + " = %s AND sem_kvutza = %s";
 
             query = format(USECASE_QUERY,
                     request.getPERSON_IDNO(), request.getPERSON_IDNO());

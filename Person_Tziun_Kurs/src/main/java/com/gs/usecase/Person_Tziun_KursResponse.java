@@ -54,48 +54,51 @@ public class Person_Tziun_KursResponse implements ServiceResponse {
         setTB_036_MATZAV_TZIUN_TEUR(rs.getString("TEUR"));
     }
 
+    /*
+    This constructor is not being use, as we are using Person_Tziun_KursJdbcTask and not Person_Tziun_KursApiTask
+     */
     public Person_Tziun_KursResponse(SpaceDocument spaceDocument){
 
-        setTL_KURS_K_PNIMI(spaceDocument.getProperty("TL_KURS_K_PNIMI"));
-        setTA_PERSON_IDNO(spaceDocument.getProperty("TA_PERSON_IDNO"));
-        setTA_PERSON_SHEM_MISHP(spaceDocument.getProperty("TA_PERSON_SHEM_MISHP"));
-        setTA_PERSON_SHEM_PRATI(spaceDocument.getProperty("TA_PERSON_SHEM_PRATI"));
-        setTA_PERSON_SHEM_MISHP_ENG(spaceDocument.getProperty("TA_PERSON_SHEM_MISHP_ENG"));
-        setTA_PERSON_SHEM_PRATI_ENG(spaceDocument.getProperty("TA_PERSON_SHEM_PRATI_ENG"));
-        setTL_TOCHNIT_CHUG(spaceDocument.getProperty("TL_TOCHNIT_CHUG"));
-        setTL_TOCHNIT_OFEN_LIMUD(spaceDocument.getProperty("TL_TOCHNIT_OFEN_LIMUD"));
-        setTL_TOCHNIT_MASLUL(spaceDocument.getProperty("TL_TOCHNIT_MASLUL"));
-        setTL_KURS_K_SEM(spaceDocument.getProperty("TL_KURS_K_SEM"));
-        setTL_KURS_K_KURS(spaceDocument.getProperty("TL_KURS_K_KURS"));
-        setTL_KURS_KVUTZA(spaceDocument.getProperty("TL_KURS_KVUTZA"));
-        setTL_KURS_MISGERET(spaceDocument.getProperty("TL_KURS_MISGERET"));
-        setTL_KURS_TZIUN_SOFI(spaceDocument.getProperty("TL_KURS_TZIUN_SOFI"));
-        setTL_KURS_SEM_KVUTZA(spaceDocument.getProperty("TL_KURS_SEM_KVUTZA"));
-        setTL_KURS_KOD_TZIUN(spaceDocument.getProperty("TL_KURS_KOD_TZIUN"));
-        setTL_KURS_MOED_KOVEA(spaceDocument.getProperty("TL_KURS_MOED_KOVEA"));
-        setTL_KURS_MATZAV_TZIUN(spaceDocument.getProperty("TL_KURS_MATZAV_TZIUN"));
-        setTL_KURS_PTOR(spaceDocument.getProperty("TL_KURS_PTOR"));
-        setTL_KURS_LSHKLL(spaceDocument.getProperty("TL_KURS_LSHKLL"));
-        setTL_KURS_HUSHLAM(spaceDocument.getProperty("TL_KURS_HUSHLAM"));
-        setTL_KURS_CHOZER(spaceDocument.getProperty("TL_KURS_CHOZER"));
-        setTL_KURS_KOVEA(spaceDocument.getProperty("TL_KURS_KOVEA"));
-        setTL_KURS_SHAOT_UNI(spaceDocument.getProperty("TL_KURS_SHAOT_UNI"));
-        setTL_KURS_MISHKAL(spaceDocument.getProperty("TL_KURS_MISHKAL"));
-        setTL_KURS_SHAOT_SCL(spaceDocument.getProperty("TL_KURS_SHAOT_SCL"));
-        setKR_KURS_TEUR_K(spaceDocument.getProperty("KR_KURS_TEUR_K"));
-        setKR_KURS_TEUR_ENG_K(spaceDocument.getProperty("KR_KURS_TEUR_ENG_K"));
-        setKR_KURS_TEUR_KURS(spaceDocument.getProperty("KR_KURS_TEUR_KURS"));
-        setKR_KURS_TEUR_ENG(spaceDocument.getProperty("KR_KURS_TEUR_ENG"));
-        setKR_KURS_SHAOT_UNI(spaceDocument.getProperty("KR_KURS_SHAOT_UNI"));
-        setKR_KURS_MISHKAL(spaceDocument.getProperty("KR_KURS_MISHKAL"));
-        setKR_KURS_LSHKLL(spaceDocument.getProperty("KR_KURS_LSHKLL"));
-        setKR_KURS_LSHKLL(spaceDocument.getProperty("KR_KURS_LSHKLL"));
-        setKR_KURS_OFEN_HORAA1(spaceDocument.getProperty("KR_KURS_OFEN_HORAA1"));
-        setTB_002_OFEN_HORAA_TEUR_K1(spaceDocument.getProperty("TB_002_OFEN_HORAA_TEUR_K1"));
-        setTB_002_OFEN_HORAA_TEUR_ENG_K1(spaceDocument.getProperty("TB_002_OFEN_HORAA_TEUR_ENG_K1"));
-        setTB_071_SIMUL_TZIUN_TEUR(spaceDocument.getProperty("TB_071_SIMUL_TZIUN_TEUR"));
-        setTB_071_SIMUL_TZIUN_TEUR_ENG(spaceDocument.getProperty("TB_071_SIMUL_TZIUN_TEUR_ENG"));
-        setTB_036_MATZAV_TZIUN_TEUR(spaceDocument.getProperty("TB_036_MATZAV_TZIUN_TEUR"));
+        setTL_KURS_K_PNIMI(spaceDocument.getProperty("K_PNIMI"));
+        setTA_PERSON_IDNO(spaceDocument.getProperty("IDNO"));
+        setTA_PERSON_SHEM_MISHP(spaceDocument.getProperty("SHEM_MISHP"));
+        setTA_PERSON_SHEM_PRATI(spaceDocument.getProperty("SHEM_PRATI"));
+        setTA_PERSON_SHEM_MISHP_ENG(spaceDocument.getProperty("SHEM_MISHP_ENG"));
+        setTA_PERSON_SHEM_PRATI_ENG(spaceDocument.getProperty("SHEM_PRATI_ENG"));
+        setTL_TOCHNIT_CHUG(spaceDocument.getProperty("CHUG"));
+        setTL_TOCHNIT_OFEN_LIMUD(spaceDocument.getProperty("OFEN_LIMUD"));
+        setTL_TOCHNIT_MASLUL(spaceDocument.getProperty("MASLUL"));
+        setTL_KURS_K_SEM(spaceDocument.getProperty("K_SEM"));
+        setTL_KURS_K_KURS(spaceDocument.getProperty("K_KURS"));
+        setTL_KURS_KVUTZA(spaceDocument.getProperty("KVUTZA"));
+        setTL_KURS_MISGERET(spaceDocument.getProperty("MISGERET"));
+        setTL_KURS_TZIUN_SOFI(spaceDocument.getProperty("TZIUN_SOFI"));
+        setTL_KURS_SEM_KVUTZA(spaceDocument.getProperty("SEM_KVUTZA"));
+        setTL_KURS_KOD_TZIUN(spaceDocument.getProperty("KOD_TZIUN"));
+        setTL_KURS_MOED_KOVEA(spaceDocument.getProperty("MOED_KOVEA"));
+        setTL_KURS_MATZAV_TZIUN(spaceDocument.getProperty("MATZAV_TZIUN"));
+        setTL_KURS_PTOR(spaceDocument.getProperty("PTOR"));
+        setTL_KURS_LSHKLL(spaceDocument.getProperty("LSHKLL"));
+        setTL_KURS_HUSHLAM(spaceDocument.getProperty("HUSHLAM"));
+        setTL_KURS_CHOZER(spaceDocument.getProperty("CHOZER"));
+        setTL_KURS_KOVEA(spaceDocument.getProperty("KOVEA"));
+        setTL_KURS_SHAOT_UNI(spaceDocument.getProperty("SHAOT_UNI"));
+        setTL_KURS_MISHKAL(spaceDocument.getProperty("MISHKAL"));
+        setTL_KURS_SHAOT_SCL(spaceDocument.getProperty("SHAOT_SCL"));
+        setKR_KURS_TEUR_K(spaceDocument.getProperty("TEUR_K"));
+        setKR_KURS_TEUR_ENG_K(spaceDocument.getProperty("TEUR_ENG_K"));
+        setKR_KURS_TEUR_KURS(spaceDocument.getProperty("TEUR_KURS"));
+        setKR_KURS_TEUR_ENG(spaceDocument.getProperty("TEUR_ENG"));
+        setKR_KURS_SHAOT_UNI(spaceDocument.getProperty("SHAOT_UNI"));
+        setKR_KURS_MISHKAL(spaceDocument.getProperty("MISHKAL"));
+        setKR_KURS_LSHKLL(spaceDocument.getProperty("LSHKLL"));
+        setKR_KURS_LSHKLL(spaceDocument.getProperty("LSHKLL"));
+        setKR_KURS_OFEN_HORAA1(spaceDocument.getProperty("OFEN_HORAA1"));
+        setTB_002_OFEN_HORAA_TEUR_K1(spaceDocument.getProperty("TEUR_K1"));
+        setTB_002_OFEN_HORAA_TEUR_ENG_K1(spaceDocument.getProperty("TEUR_ENG_K1"));
+        setTB_071_SIMUL_TZIUN_TEUR(spaceDocument.getProperty("TEUR"));
+        setTB_071_SIMUL_TZIUN_TEUR_ENG(spaceDocument.getProperty("TEUR_ENG"));
+        setTB_036_MATZAV_TZIUN_TEUR(spaceDocument.getProperty("TEUR"));
     }
 
 
