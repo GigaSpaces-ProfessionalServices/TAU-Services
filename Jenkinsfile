@@ -24,10 +24,10 @@ pipeline {
             tagFilter: '*', 
             type: 'PT_BRANCH'
             )
-        
+
         gitParameter (
             branch: '', 
-            branchFilter: 'origin/(.*)', 
+            branchFilter: '.*', 
             defaultValue: '', 
             description: 'Choose the target revision', 
             listSize: '0', 
