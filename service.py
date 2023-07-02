@@ -168,11 +168,19 @@ def deploy_service():
     resource_name = get_service_resource(service)
     base_url = f'http://{manager}:8090/v2/pus'
     h = {'Accept': 'text/plain', 'Content-Type': 'application/json'}
+    #service deploy ms-digital-iban --zones iban -p consul.host=localhost -p minPort=8111 -p maxPort=8311 -p space=dih-tau-space --instances 1 iban-1.1-SNAPSHOT-jar-with-dependencies.jar
     payload = str({
         "resource": resource_name, 
-        "topology":{"instances": 1}, 
         "name":service, 
-        "sla": {"zones":[service]}
+        "topology":{"instances": 1}, 
+        "sla": {
+            "zones":[service], 
+            "contextProperties":{
+                "consul.host": "localhost", 
+                "minPort": 8111, 
+                "maxPort": 8311
+                }
+            }
         }).replace("'",'"')
     deploy_pu_data = requests.post(base_url, data=payload, headers=h)
     while deploy_pu_data.text is None:
