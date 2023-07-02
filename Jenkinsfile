@@ -24,12 +24,6 @@ pipeline {
             tagFilter: '*', 
             type: 'PT_BRANCH'
             )
-
-        string (
-            description: 'Enter a build number (e.g. 1.12.4)', 
-            name: 'BUILD', 
-            trim: true
-            )
         }
     
     stages {
@@ -39,6 +33,11 @@ pipeline {
                 // Get the code from a GitHub repository
                 git branch: "${params.BRANCH}", url: 'https://github.com/GigaSpaces-ProfessionalServices/TAU-Services.git'
                 sh "mvn clean install -f ${params.BRANCH}/pom-runtime.xml"
+                sh '''
+                for f in $(ls \${WORKSPACE}/\${BRANCH}/target/*.jar); do
+                    mv \${f} "\$(echo \${f} | sed "s/SNAPSHOT/\${BUILD_NUMBER}/")"
+                done
+                '''
             }
         }    
     
@@ -54,5 +53,10 @@ pipeline {
                 sh "python3 -u service.py deploy ${ENVIRONMENT} ${BRANCH}"
             }
         }
-    }   
+    }
+    // post {
+    //     success {
+    //         // send resource file to a file repository (S3, NFS etc...)
+    //     }
+    // }
 }
