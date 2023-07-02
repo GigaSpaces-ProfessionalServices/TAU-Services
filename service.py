@@ -168,7 +168,14 @@ def deploy_service():
     resource_name = get_service_resource(service)
     base_url = f'http://{manager}:8090/v2/pus'
     h = {'Accept': 'text/plain', 'Content-Type': 'application/json'}
-    #service deploy ms-digital-iban --zones iban -p consul.host=localhost -p minPort=8111 -p maxPort=8311 -p space=dih-tau-space --instances 1 iban-1.1-SNAPSHOT-jar-with-dependencies.jar
+    #service deploy ms-digital-iban 
+    # --zones iban 
+    # -p consul.host=localhost 
+    # -p minPort=8111 
+    # -p maxPort=8311 
+    # -p space=dih-tau-space 
+    # --instances 1 
+    # iban-1.1-SNAPSHOT-jar-with-dependencies.jar
     payload = str({
         "resource": resource_name, 
         "name":service, 
@@ -178,7 +185,8 @@ def deploy_service():
             "contextProperties":{
                 "consul.host": "localhost", 
                 "minPort": 8111, 
-                "maxPort": 8311
+                "maxPort": 8311, 
+                "space": "dih-tau-space"
                 }
             }
         }).replace("'",'"')
