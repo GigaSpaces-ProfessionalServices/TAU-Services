@@ -190,6 +190,7 @@ def deploy_service():
                 }
             }
         }).replace("'",'"')
+    if DEBUG: print(f"[DEBUG] deploy payload: {payload}")
     deploy_pu_data = requests.post(base_url, data=payload, headers=h)
     while deploy_pu_data.text is None:
         sleep(1)
@@ -215,6 +216,8 @@ def deploy_service():
 
 if __name__ == '__main__':
     
+    DEBUG = True
+
     if len(sys.argv) < 4:
         print("[ERROR] missing required parameters")
         usage()
