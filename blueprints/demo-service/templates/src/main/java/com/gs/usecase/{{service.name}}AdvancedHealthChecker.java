@@ -2,9 +2,7 @@ package com.gs.usecase;
 
 import org.slf4j.Logger;
 import java.sql.Date;
-import tau.ods.gs.model.logging.LoggerFactory;
-import tau.ods.gs.model.logging.LogBuilder;
-import tau.ods.gs.model.logging.LogMessage;
+import org.slf4j.*;
 import com.gs.infra.health.HealthChecker;
 import org.openspaces.core.GigaSpace;
 import org.springframework.stereotype.Component;
@@ -22,13 +20,6 @@ public class {{service.name}}AdvancedHealthChecker implements HealthChecker {
 
     @Override
     public int isHealthy() {
-
-        logger.info(LogBuilder.get()
-        .setStatusCode(200)
-        .setLevel(LogMessage.Level.INFO)
-        .setTimestamp(new Date(System.currentTimeMillis()))
-        .setMessage("going to run health for KR_CHEDER and verify if type " + type + " exist in dih-tau-space")
-        .createLogMessage());
 
         if (gigaSpace.getTypeManager().getTypeDescriptor(type) == null) {
             logger.error("{{service.name}} service is un-health because type " + type + " doesn't exist in dih-tau-space");

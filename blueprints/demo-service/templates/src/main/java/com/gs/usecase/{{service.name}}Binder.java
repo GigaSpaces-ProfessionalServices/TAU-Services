@@ -13,6 +13,10 @@ public class {{service.name}}Binder implements RequestBinder {
 
     @Override
     public ServiceRequest bind(spark.Request request) {
-        return gson.fromJson(request.body(), {{service.name}}Request.class);
+        {{service.name}}Request requestFromHeaders = new {{service.name}}Request();
+        requestFromHeaders.set{{request.param1}}(request.queryParams("{{request.param1}}"));
+        requestFromHeaders.set{{request.param2}}(request.queryParams("{{request.param2}}"));
+
+        return requestFromHeaders;
     }
 }

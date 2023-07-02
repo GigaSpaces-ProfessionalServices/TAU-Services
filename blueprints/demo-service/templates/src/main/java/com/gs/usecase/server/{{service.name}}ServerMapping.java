@@ -1,7 +1,7 @@
 package com.gs.usecase.server;
 
 import com.gs.infra.health.HealthReporter;
-import com.gs.usecase.{{service.name}}ApiTask;
+import com.gs.usecase.{{service.name}}JdbcTask;
 import com.gs.usecase.{{service.name}}Binder;
 import com.gs.usecase.{{service.name}}Request;
 import com.gs.usecase.{{service.name}}Response;
@@ -29,11 +29,10 @@ public class {{service.name}}ServerMapping extends ServerMapping {
         return SwaggerGenerator.generate("{{service.description}}","{{service.name}}",getEndpoint(),
                                         "{{service.description}}", port,
         {{service.name}}Request.class, {{service.name}}Response.class);
-        }
-
+    }
 
     @Override
     public ServiceRoute getServiceRoute() {
-        return new ServiceRoute(new {{service.name}}ApiTask(), new {{service.name}}Binder());
+        return new ServiceRoute(new {{service.name}}JdbcTask(), new {{service.name}}Binder());
     }
 }

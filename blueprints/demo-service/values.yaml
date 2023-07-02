@@ -1,0 +1,18 @@
+project:
+  groupId: com.gs.tau
+java:
+  version: 11
+service:
+  name: KR_CHEDER
+  type: STUD.KR_CHEDER
+  description: add description here
+  version: 1.0-SNAPSHOT
+  space: dih-tau-space
+query:
+  param1: K_BINYAN
+  param2: K_MIS_CHEDER
+  param3: K_ZIHUY_NOSAF
+  param4: AZARIM
+request:
+  param1: K_BINYAN
+  param2: K_MIS_CHEDER
