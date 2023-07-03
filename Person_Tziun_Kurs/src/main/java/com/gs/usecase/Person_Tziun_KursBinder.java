@@ -18,6 +18,7 @@ public class Person_Tziun_KursBinder implements RequestBinder {
         Person_Tziun_KursRequest requestFromHeaders = new Person_Tziun_KursRequest();
         requestFromHeaders.setPERSON_IDNO(request.queryParams("idno"));
         requestFromHeaders.setTL_KURS_SEM_KVUTZA(request.queryParams("sem_kvutza"));
+        requestFromHeaders.setLimit(request.queryParams("limit"));
 
         return requestFromHeaders;
     }

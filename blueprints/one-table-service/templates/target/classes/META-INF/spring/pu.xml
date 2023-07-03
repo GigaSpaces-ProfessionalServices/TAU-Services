@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:os-core="http://www.openspaces.org/schema/core"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.openspaces.org/schema/core http://www.openspaces.org/schema/core/openspaces-core.xsd">
+
+    <!-- Note: description is used to infer processing unit type -->
+    <description>pu-type=stateless</description>
+
+	<!-- Enable Spring component scanning for the specified path -->
+	<context:component-scan base-package="com.gs" />
+	
+	<!-- Enable GigaSpaces annotation support -->
+	<os-core:annotation-support/>
+
+	<!-- Spring property configurer which allows us to use system properties (such as user.name). -->
+
+    <bean id="baseHealthChecker" class="com.gs.infra.health.BaseHealthChecker"/>
+    <bean id="advancedHealthChecker" class="com.gs.usecase.{{service.name}}AdvancedHealthChecker"/>
+
+    <bean id="healthReporter" class="com.gs.infra.health.HealthReporter">
+        <property name="healthCheckers">
+            <list>
+                <ref bean="baseHealthChecker"/>
+                <ref bean="advancedHealthChecker"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="requestHandler" class="com.gs.infra.server.BaseHandler"/>
+
+    <bean id="serviceCatalog" class="com.gs.usecase.{{service.name}}ServiceCatalogImpl"/>
+
+
+    <bean class="com.gs.usecase.server.{{service.name}}ServerConfig">
+        <property name="minPort" value="${minPort:8111}"/>
+        <property name="maxPort" value="${maxPort:8311}"/>
+        <property name="serviceId" value="${clusterInfo.name}-${clusterInfo.instanceId}"/>
+        <property name="requiredRole" value="${service.requiredRole:reader}"/>
+        <property name="consulHost" value="${consul.host:}"/>
+        <property name="consulPort" value="${consul.port:8500}"/>
+        <property name="healthReporter" ref="healthReporter"/>
+        <property name="version" value="v1"/>
+        <property name="requestHandler" ref="requestHandler"/>
+    </bean>
+
+    <!-- Defines a space proxy-->
+    <os-core:space-proxy id="space" space-name="{{service.space}}"/>
+
+    <!-- Defines a gigaSpace for the space proxy-->
+	<os-core:giga-space id="gigaSpace" space="space" tx-manager="transactionManager" />
+
+	<!-- Defines a transaction manager -->
+	<os-core:distributed-tx-manager id="transactionManager" />
+</beans>

@@ -48,7 +48,7 @@ public class Person_Tziun_KursJdbcTask extends GeneralTask<Person_Tziun_KursRequ
             "        pr.TALMID in ('01') AND\n" +
             "        pr.IDNO = '%s' AND\n" +
             "        tlkr.SEM_KVUTZA like '%s'\n" +
-            "        ORDER BY tlkr.K_SEM,tlkr.K_KURS limit 100";
+            "        ORDER BY tlkr.K_SEM,tlkr.K_KURS limit %s";
 
 
     @Override
@@ -58,7 +58,7 @@ public class Person_Tziun_KursJdbcTask extends GeneralTask<Person_Tziun_KursRequ
 
     public ArrayList<Person_Tziun_KursResponse> execute() {
 
-        String query = String.format(USECASE_QUERY, request.getPERSON_IDNO(), request.getTL_KURS_SEM_KVUTZA());
+        String query = String.format(USECASE_QUERY, request.getPERSON_IDNO(), request.getTL_KURS_SEM_KVUTZA(), request.getLimit());
 
         // A list to store the results
         ArrayList<Person_Tziun_KursResponse> responseList = new ArrayList<>();

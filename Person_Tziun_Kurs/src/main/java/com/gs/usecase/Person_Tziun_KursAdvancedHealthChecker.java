@@ -10,9 +10,7 @@ import javax.annotation.Resource;
 @Component
 public class Person_Tziun_KursAdvancedHealthChecker implements HealthChecker {
 
-    private static final Logger logger_gsc = org.slf4j.LoggerFactory.getLogger(Person_Tziun_KursAdvancedHealthChecker.class);
-//    private static final Logger logger_service = tau.ods.gs.model.logging.LoggerFactory.getLogger(Person_Tziun_KursAdvancedHealthChecker.class);
-    static private final String type = "STUD.Person_Tziun_Kurs";
+    static private final String type = "STUD.TA_PERSON";
 
     @Resource
     GigaSpace gigaSpace;
@@ -20,7 +18,11 @@ public class Person_Tziun_KursAdvancedHealthChecker implements HealthChecker {
     @Override
     public int isHealthy() {
 
-        if (gigaSpace.getTypeManager().getTypeDescriptor(type) == null) {
+        if (gigaSpace.getTypeManager().getTypeDescriptor("STUD.TA_PERSON") == null ||
+                gigaSpace.getTypeManager().getTypeDescriptor("STUD.TL_TOCHNIT") == null ||
+                gigaSpace.getTypeManager().getTypeDescriptor("STUD.TL_KURS") == null ||
+                gigaSpace.getTypeManager().getTypeDescriptor("STUD.TB_071_SIMUL_TZIUN") == null ||
+                gigaSpace.getTypeManager().getTypeDescriptor("STUD.TB_002_OFEN_HORAA") == null) {
             return 500;
         }else{
             return 200;
