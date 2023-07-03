@@ -168,35 +168,25 @@ def deploy_service():
     resource_name = get_service_resource(service)
     base_url = f'http://{manager}:8090/v2/pus'
     h = {'Accept': 'text/plain', 'Content-Type': 'application/json'}
-    #service deploy ms-digital-iban 
-    # --zones iban 
-    # -p consul.host=localhost 
-    # -p minPort=8111 
-    # -p maxPort=8311 
-    # -p space=dih-tau-space 
-    # --instances 1 
-    # iban-1.1-SNAPSHOT-jar-with-dependencies.jar
     payload = str({
         "resource": resource_name, 
-        "name":service, 
         "topology":{"instances": 1}, 
-        "sla": {
-            "zones":[service], 
-            "contextProperties":{
-                "consul.host": "localhost", 
-                "minPort": 8111, 
-                "maxPort": 8311
-                }
-            }
+        "name":service, 
+        "sla": {"zones":[service]}, 
+        "contextProperties":{
+            "consul.host": "localhost", 
+            "minPort": 8115, 
+            "maxPort": 8311,
+            "space": "dih-tau-space"
+        }
         }).replace("'",'"')
-    if DEBUG: print(f"[DEBUG] deploy payload: {payload}")
     deploy_pu_data = requests.post(base_url, data=payload, headers=h)
     while deploy_pu_data.text is None:
         sleep(1)
     print(f"[INFO] operation: {get_request_desc(deploy_pu_data.text)} (id: {deploy_pu_data.text})")
     if deploy_pu_data.status_code in range(200,300):
         print("[INFO] deployed processing unit successfully")
-        print(f"[INFO] waiting for service to initialize...")
+        print(f"[INFO] waiting for service to instantiate...")
         count, timeout = 0, 60
         while count < timeout:
             if pu_intact(service):
@@ -214,13 +204,6 @@ def deploy_service():
 
 
 if __name__ == '__main__':
-    
-    ### debug flag ###
-    #global DEBUG
-    
-    DEBUG = True
-
-    ##################
 
     if len(sys.argv) < 4:
         print("[ERROR] missing required parameters")
