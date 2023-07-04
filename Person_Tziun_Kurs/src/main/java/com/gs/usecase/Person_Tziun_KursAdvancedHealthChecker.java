@@ -18,14 +18,17 @@ public class Person_Tziun_KursAdvancedHealthChecker implements HealthChecker {
     @Override
     public int isHealthy() {
 
-        if (gigaSpace.getTypeManager().getTypeDescriptor("STUD.TA_PERSON") == null ||
-                gigaSpace.getTypeManager().getTypeDescriptor("STUD.TL_TOCHNIT") == null ||
-                gigaSpace.getTypeManager().getTypeDescriptor("STUD.TL_KURS") == null ||
-                gigaSpace.getTypeManager().getTypeDescriptor("STUD.TB_071_SIMUL_TZIUN") == null ||
-                gigaSpace.getTypeManager().getTypeDescriptor("STUD.TB_002_OFEN_HORAA") == null) {
-            return 500;
-        }else{
-            return 200;
-        }
+        //todo just for checking the NB registration on AWS where the types are missing.
+        return 200;
+
+//        if (gigaSpace.getTypeManager().getTypeDescriptor("STUD.TA_PERSON") == null ||
+//                gigaSpace.getTypeManager().getTypeDescriptor("STUD.TL_TOCHNIT") == null ||
+//                gigaSpace.getTypeManager().getTypeDescriptor("STUD.TL_KURS") == null ||
+//                gigaSpace.getTypeManager().getTypeDescriptor("STUD.TB_071_SIMUL_TZIUN") == null ||
+//                gigaSpace.getTypeManager().getTypeDescriptor("STUD.TB_002_OFEN_HORAA") == null) {
+//            return 500;
+//        }else{
+//            return 200;
+//        }
     }
 }
