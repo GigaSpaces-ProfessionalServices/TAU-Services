@@ -30,17 +30,28 @@ pipeline {
         
         stage('Build') {
             steps {
-                // Get the code from a GitHub repository
-                git branch: "${params.BRANCH}", url: 'https://github.com/GigaSpaces-ProfessionalServices/TAU-Services.git'
-                sh "mvn clean install -f ${params.BRANCH}/pom-runtime.xml"
+                git branch: "${params.BRANCH}", url: 'https://tau-gitlab.tau.ac.il/tau-strategy/dih.git', credentialsId: '80939591-33cc-41a9-b839-756e39e6f34d'
+                script {
+                    try {
+                        sh "mvn clean install"
+                        sh "mvn clean install -f ${params.BRANCH}/pom-runtime.xml"
+                    } catch (Exception e) {
+                        error("Failed to execute 'mvn install'")
+                    }
+                }
+            }
+        }    
+    
+        stage('Set build version') {
+            steps {
                 sh '''
                 for f in $(ls \${WORKSPACE}/\${BRANCH}/target/*.jar); do
                     mv \${f} "\$(echo \${f} | sed "s/SNAPSHOT/\${BUILD_NUMBER}/")"
                 done
                 '''
             }
-        }    
-    
+        }
+
         stage('Undeploy') {
             steps {
                 sh "sudo chmod +x service.py"

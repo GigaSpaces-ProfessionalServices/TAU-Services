@@ -216,11 +216,11 @@ if __name__ == '__main__':
     
     # parse environment
     if env_name == "Development":
-        env_key = 'DEV'
+        env_key = 'TAUG'
     elif env_name == "Stage":
-        env_key = 'STG'
+        env_key = 'TAUS'
     elif env_name == "Production":
-        env_key = 'PRD'
+        env_key = 'TAUP'
     else:
         env_key = ''
 
