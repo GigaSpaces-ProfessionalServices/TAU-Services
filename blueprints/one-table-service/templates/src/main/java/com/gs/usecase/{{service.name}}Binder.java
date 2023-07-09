@@ -4,9 +4,7 @@ import com.google.gson.Gson;
 import com.gs.infra.service.RequestBinder;
 import com.gs.infra.service.ServiceRequest;
 
-/**
- * Binds a general request to the specific service.
- */
+//todo change this bind method, so it will fit to the number of request params in the values.yaml file.
 public class {{service.name}}Binder implements RequestBinder {
 
     private final Gson gson = new Gson();

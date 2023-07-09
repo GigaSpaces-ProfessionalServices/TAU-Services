@@ -3,9 +3,7 @@ package com.gs.usecase;
 import com.gs.infra.service.ServiceResponse;
 import java.sql.*;
 
-/**
- * a Response
- */
+//todo change this properties and methods, so it will fit to the number of query params in the values.yaml file.
 public class {{service.name}}Response implements ServiceResponse {
 
     String {{query.param1}};
