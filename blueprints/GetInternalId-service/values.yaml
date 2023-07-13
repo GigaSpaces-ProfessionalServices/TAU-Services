@@ -3,16 +3,12 @@ project:
 java:
   version: 11
 service:
-  name: KR_CHEDER # This will be the name of the service
-  type: STUD.KR_CHEDER # This is the type in the space that this service is use
+  name: GetInternalId # This will be the name of the service
+  type: STUD.TA_PERSON # This is the type in the space that this service is use
   description: add description here
   version: 1.0-SNAPSHOT # The maven artifact version
   space: dih-tau-space # The space name
 query: # Those are the parameters that you what to query and get a response
-  param1: K_BINYAN
-  param2: K_MIS_CHEDER
-  param3: K_ZIHUY_NOSAF
-  param4: AZARIM
+  param1: K_PNIMI
 request: # Those are the parameters that you will need to pass in the query URL
-  param1: K_BINYAN
-  param2: K_MIS_CHEDER
+  param1: IDNO

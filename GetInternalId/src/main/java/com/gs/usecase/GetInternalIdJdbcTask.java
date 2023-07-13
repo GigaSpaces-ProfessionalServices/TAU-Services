@@ -8,33 +8,27 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-public class {{service.name}}JdbcTask extends GeneralTask<{{service.name}}Request, {{service.name}}Response> implements Task<ArrayList<{{service.name}}Response>> {
-    private static final Logger logger = LoggerFactory.getLogger({{service.name}}Response.class);
+public class GetInternalIdJdbcTask extends GeneralTask<GetInternalIdRequest, GetInternalIdResponse> implements Task<ArrayList<GetInternalIdResponse>> {
+    private static final Logger logger = LoggerFactory.getLogger(GetInternalIdResponse.class);
 
-    static private final String USECASE_QUERY1 ="SELECT {{query.param1}},{{query.param2}},{{query.param3}},{{query.param4}} " +
-            "FROM {{service.type}} " +
-            "WHERE {{request.param1}} = '%s' AND {{request.param2}} = '%s'";
-
-    static private final String USECASE_QUERY2 ="SELECT {{query.param1}},{{query.param2}},{{query.param3}},{{query.param4}} " +
-        "FROM {{service.type}} " +
-        "WHERE {{request.param1}} = '%s'";
+    //todo change here the number of query params and request params acording to what you have in the values.yaml file
+    // this query will be used when setting the 2 parameters
+    static private final String USECASE_QUERY1 ="SELECT K_PNIMI " +
+            "FROM STUD.TA_PERSON " +
+            "WHERE IDNO = '%s' ";
 
     @Override
     public Integer routing() {
         return null;
     }
 
-    public ArrayList<{{service.name}}Response> execute() {
+    public ArrayList<GetInternalIdResponse> execute() {
 
-        String query = null;
-        if (request.get{{request.param2}}() != null){
-            query=String.format(USECASE_QUERY1,request.get{{request.param1}}(),request.get{{request.param2}}());
-        }else{
-            query=String.format(USECASE_QUERY2,request.get{{request.param1}}());
-        }
+        //todo change here the number of query params and request params acording to what you have in the values.yaml file.
+        String query = String.format(USECASE_QUERY1,request.getIDNO());
 
         // A list to store the results
-        ArrayList<{{service.name}}Response> responseList = new ArrayList<>();
+        ArrayList<GetInternalIdResponse> responseList = new ArrayList<>();
 
         Properties props = new Properties();
         props.put("com.gs.embeddedQP.enabled", "false");
@@ -58,7 +52,7 @@ public class {{service.name}}JdbcTask extends GeneralTask<{{service.name}}Reques
             }
 
             while (resultSet.next()) {
-                {{service.name}}Response response = new {{service.name}}Response(resultSet);
+                GetInternalIdResponse response = new GetInternalIdResponse(resultSet);
                 responseList.add(response);
             }
 
