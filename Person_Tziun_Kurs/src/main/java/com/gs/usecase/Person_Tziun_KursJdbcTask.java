@@ -13,43 +13,69 @@ import java.util.*;
 public class Person_Tziun_KursJdbcTask extends GeneralTask<Person_Tziun_KursRequest, Person_Tziun_KursResponse> implements Task<ArrayList<Person_Tziun_KursResponse>> {
     private static final Logger logger = LoggerFactory.getLogger(Person_Tziun_KursResponse.class);
 
-    // Working via Ops but getting com.j_spaces.jdbc.parser.grammar.ParseException: Encountered " <IDENTIFIER> "OUTER "" at line 15, column 25.
-    static private final String USECASE_QUERY ="SELECT tlkr.K_PNIMI,pr.IDNO,pr.SHEM_MISHP,pr.SHEM_PRATI, pr.SHEM_MISHP_ENG,pr.SHEM_PRATI_ENG,\n" +
-            "                tl.CHUG, tl.TOAR, tl.OFEN_LIMUD,tl.MASLUL,\n" +
-            "                tlkr.K_SEM,tlkr.K_KURS,tlkr.KVUTZA,\n" +
-            "                tlkr.SEM_KVUTZA,\n" +
-            "                tlkr.MISGERET,\n" +
-            "                tlkr.TZIUN_SOFI,tlkr.KOD_TZIUN,tlkr.MOED_KOVEA,tlkr.MATZAV_TZIUN,tlkr.PTOR,tlkr.LSHKLL,\n" +
-            "                tlkr.HUSHLAM,tlkr.CHOZER,tlkr.KOVEA,tlkr.SHAOT_UNI,tlkr.MISHKAL,tlkr.SHAOT_SCL,\n" +
-            "                kr.TEUR_K, kr.TEUR_ENG_K, kr.TEUR_KURS,kr.TEUR_ENG,\n" +
-            "                kr.SHAOT_UNI,kr.MISHKAL,kr.LSHKLL,\n" +
-            "                kr.OFEN_HORAA1,t002.TEUR_K1,t002.TEUR_ENG_K1,\n" +
-            "                t071.TEUR, t071.TEUR_ENG\n" +
-//          "                t036.TEUR\n" +
-            "        FROM    STUD.TA_PERSON pr,\n" +
-            "                STUD.TL_TOCHNIT tl,\n" +
-            "                STUD.TL_KURS tlkr\n" +
-            "                RIGHT OUTER JOIN STUD.TB_071_SIMUL_TZIUN t071\n" +
-            "                on tlkr.kod_tziun=t071.k_code,\n" +
-            "                STUD.KR_KURS kr\n" +
-            "                RIGHT OUTER JOIN STUD.TB_002_OFEN_HORAA t002\n" +
-            "                on kr.ofen_horaa1=t002.k_code\n" +
-//           "               STUD.TL_KURS tlkr1\n" +  // when its on, I get OOM
-//            "              RIGHT OUTER JOIN STUD.TB_036_MATZAV_TZIUN t036\n" +
-//            "              on tlkr1.matzav_tziun=t036.k_code" +
-            "        WHERE tlkr.MEVUTAL='0' AND\n" +
-            "        tlkr.kod_tziun=t071.k_code AND\n" +
-//          "        tlkr.K_KURS=kr.K_KURS AND\n" +   // when its on, the query return nothing
-            "        (tlkr.K_SEM >= kr.K_ME_SEM AND tlkr.K_SEM <= kr.AD_SEM) AND\n" +
-            "        tlkr.K_PNIMI=tl.K_PNIMI AND\n" +
-            "        tlkr.K_SIDURI_TOCHNIT=tl.K_SIDURI_TOCHNIT AND\n" +
-            "        tlkr.K_SIDURI_TOAR =tl.K_SIDURI_TOAR AND\n" +
-            "        pr.K_PNIMI=tl.K_PNIMI and\n" +
-            "        pr.TALMID in ('01') AND\n" +
-            "        pr.IDNO = '%s' AND\n" +
-            "        tlkr.SEM_KVUTZA like '%s'\n" +
-            "        ORDER BY tlkr.K_SEM,tlkr.K_KURS limit %s";
-
+    static private final String USECASE_QUERY =" SELECT tlkr.K_PNIMI,\n" +
+    "pr.IDNO,\n" +
+    "pr.SHEM_MISHP,\n" +
+    "pr.SHEM_PRATI,\n" +
+    "pr.SHEM_MISHP_ENG,\n" +
+    "pr.SHEM_PRATI_ENG,\n" +
+    "tl.CHUG,\n" +
+    "tl.TOAR,\n" +
+    "tl.OFEN_LIMUD,\n" +
+    "tl.MASLUL,\n" +
+    "tlkr.K_SEM,\n" +
+    "tlkr.K_KURS,\n" +
+    "tlkr.KVUTZA,\n" +
+    "tlkr.SEM_KVUTZA,\n" +
+    "tlkr.MISGERET,\n" +
+    "tlkr.TZIUN_SOFI,\n" +
+    "tlkr.KOD_TZIUN,\n" +
+    "tlkr.MOED_KOVEA,\n" +
+    "tlkr.MATZAV_TZIUN,\n" +
+    "tlkr.PTOR,\n" +
+    "tlkr.LSHKLL,\n" +
+    "tlkr.HUSHLAM,\n" +
+    "tlkr.CHOZER,\n" +
+    "tlkr.KOVEA,\n" +
+    "tlkr.SHAOT_UNI,\n" +
+    "tlkr.MISHKAL,\n" +
+    "tlkr.SHAOT_SCL,\n" +
+    "kr.TEUR_K,\n" +
+    "kr.TEUR_ENG_K,\n" +
+    "kr.TEUR_KURS,\n" +
+    "kr.TEUR_ENG,\n" +
+    "kr.SHAOT_UNI AS KR_SHAOT_UNI,\n" +
+    "kr.MISHKAL,\n" +
+    "kr.LSHKLL,\n" +
+    "kr.OFEN_HORAA1,\n" +
+    "t002.TEUR_K1,\n" +
+    "t002.TEUR_ENG_K1,\n" +
+    "t071.TEUR,\n" +
+    "t071.TEUR_ENG \n" +
+    "FROM\n" +
+    "STUD.TA_PERSON pr\n" +
+    "join  STUD.TL_TOCHNIT tl \n" +
+    "on tl.k_pnimi=pr.k_pnimi \n" +
+    "join STUD.TL_KURS tlkr \n" +
+    "on  tlkr.K_PNIMI = tl.K_PNIMI \n" +
+    "AND tlkr.K_SIDURI_TOCHNIT = tl.K_SIDURI_TOCHNIT \n" +
+    "AND tlkr.K_SIDURI_TOAR = tl.K_SIDURI_TOAR \n" +
+    "RIGHT OUTER JOIN STUD.TB_071_SIMUL_TZIUN t071 \n" +
+    "on tlkr.kod_tziun = t071.k_code \n" +
+    "join STUD.KR_KURS kr \n" +
+    "on kr.k_kurs=tlkr.k_kurs \n" +
+    "AND (tlkr.K_SEM >= kr.K_ME_SEM AND tlkr.K_SEM <= kr.AD_SEM) \n" +
+    "RIGHT OUTER JOIN STUD.TB_002_OFEN_HORAA t002 \n" +
+    "on kr.ofen_horaa1 = t002.k_code \n" +
+    "WHERE \n" +
+    "tlkr.MEVUTAL = '0' \n" +
+    "and pr.TALMID in ('01') \n" +
+    "AND pr.IDNO = '%s' \n" +
+    "AND tlkr.SEM_KVUTZA like '%s' \n" +
+    "ORDER BY \n" +
+    "tlkr.K_SEM, \n" +
+    "tlkr.K_KURS \n" +
+    "limit %s";
 
     @Override
     public Integer routing() {
