@@ -40,8 +40,8 @@ pipeline {
                     }
                 }
             }
-        }    
-    
+        }
+
         stage('Set build version') {
             steps {
                 sh '''
@@ -62,6 +62,17 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh "python3 -u service.py deploy ${ENVIRONMENT} ${BRANCH}"
+                // get ssl certificates into selected branch
+                dir('__main__') {
+                    checkout scm
+                }
+                sh "mv __main__/ssl . && rm -rf __main__*"
+            }
+        }
+        
+        stage('Test') {
+            steps {
+                sh "python3 -u service.py test ${ENVIRONMENT} ${BRANCH}"
             }
         }
     }
