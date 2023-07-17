@@ -3,6 +3,7 @@
 
 import requests
 import sys
+import os
 import re
 import yaml
 import subprocess
@@ -203,6 +204,72 @@ def deploy_service():
     print()
 
 
+def test_service_health():
+    # get northbound applicative domain
+    cmd = f"sudo su - root -c \"ssh {pivot} 'cat \$ENV_CONFIG/nb/applicative/nb.conf.template' | grep \"NB_DOMAIN\"\""
+    nbconf = subprocess.run(cmd, shell=True, stdout=subprocess.PIPE).stdout.decode()
+    nb_domain = str(nbconf).rstrip('\n').replace('"','').split('=')[1]
+    base_url = f'https://{nb_domain}:8443/{service}/v1/actuator/health'
+    
+    # check if the directory for selected environment exists
+    ssl_root = f"ssl/{env_name}"
+    if os.path.exists(ssl_root):
+        try:
+            ca_file = glob(f"{ssl_root}/ca/*.crt")[0]
+        except:
+            print("[ERROR] health check aborted. CA certificate could not be found.")
+            return
+        try:
+            cert_file = glob(f"{ssl_root}/cert/*.crt")[0]
+        except:
+            print("[ERROR] health check aborted. certificate could not be found.")
+            return
+        try:
+            key_file = glob(f"{ssl_root}/key/*.key")[0]
+        except:
+            print("[ERROR] health check aborted. Key file could not be found.")
+            return
+    else:
+        print(f"[ERROR] health check aborted. Could not find certificates for environment '{env_name}'.")
+        return
+    
+    # execute health check
+
+    count, timeout = 1, 20
+    health_ok, ssl_ok = False, True
+    print(f"[INFO] Checking service '{service}' health ...")
+    while count < timeout:
+        count += 1
+        try:
+            response = requests.get(base_url, cert=(cert_file, key_file), verify=ca_file, timeout=5)
+            # response = requests.get(base_url, cert=(cert_file, key_file), verify=True, timeout=5)
+        except requests.exceptions.SSLError as serr:
+            print(f"[ERROR]: request status - SSLError: \n{serr}")
+            ssl_ok = False
+        except requests.exceptions.Timeout:
+            print("[WARNING]: request status - timeout reached.")
+            sleep(1)
+            continue
+        except requests.exceptions.TooManyRedirects:
+            print("[WARNING]: request status - too many redirects.")
+            sleep(1)
+            continue
+        except requests.exceptions.RequestException as e:
+            print(f"[WARNING]: request status - exception: \n{e}")
+            continue
+        else:
+            if response.status_code == 200:
+                health_ok = True
+            else:
+                sleep(1)
+        if not ssl_ok:
+            break
+        if health_ok:    
+            text = response.text.replace('"','')
+            print(f"[INFO ]service '{service}' health check returned: {text}")
+            break
+
+
 if __name__ == '__main__':
 
     if len(sys.argv) < 4:
@@ -240,7 +307,6 @@ if __name__ == '__main__':
     # load servers from host.yaml
     cmd = f"sudo su - root -c \"ssh {pivot} 'cat \$ENV_CONFIG/host.yaml'\""
     hosts = yaml.safe_load(subprocess.run(cmd, shell=True, stdout=subprocess.PIPE).stdout.decode())
-    
     # parse management hosts and set operational manager
     MANAGER_HOSTS = [m for m in hosts['servers']['manager'].values()]
     if len(MANAGER_HOSTS) == 0:
@@ -259,5 +325,7 @@ if __name__ == '__main__':
         deploy_service()
     elif opt == 'undeploy':
         undeploy_service()
+    elif opt == 'test':
+        test_service_health()
     else:
         usage()
