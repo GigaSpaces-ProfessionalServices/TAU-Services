@@ -10,13 +10,15 @@
     <!-- Note: description is used to infer processing unit type -->
     <description>pu-type=stateless</description>
 
-	<!-- Enable Spring component scanning for the specified path -->
-	<context:component-scan base-package="com.gs.infra" />
-	
-	<!-- Enable GigaSpaces annotation support -->
-	<os-core:annotation-support/>
+    <bean class="tau.ods.gs.model.config.ModelConfig"/>
 
-	<!-- Spring property configurer which allows us to use system properties (such as user.name). -->
+    <!-- Enable Spring component scanning for the specified path -->
+    <context:component-scan base-package="com.gs.infra" />
+
+    <!-- Enable GigaSpaces annotation support -->
+    <os-core:annotation-support/>
+
+    <!-- Spring property configurer which allows us to use system properties (such as user.name). -->
 
     <bean id="baseHealthChecker" class="com.gs.infra.health.BaseHealthChecker"/>
     <bean id="advancedHealthChecker" class="com.gs.usecase.GetInternalIdAdvancedHealthChecker"/>
@@ -37,7 +39,7 @@
 
     <bean class="com.gs.usecase.server.GetInternalIdServerConfig">
         <property name="minPort" value="${minPort:8111}"/>
-        <property name="maxPort" value="${maxPort:8311}"/>
+        <property name="maxPort" value="${maxPort:8111}"/>
         <property name="serviceId" value="${clusterInfo.name}-${clusterInfo.instanceId}"/>
         <property name="requiredRole" value="${service.requiredRole:reader}"/>
         <property name="consulHost" value="${consul.host:}"/>
@@ -51,8 +53,8 @@
     <os-core:space-proxy id="space" space-name="dih-tau-space"/>
 
     <!-- Defines a gigaSpace for the space proxy-->
-	<os-core:giga-space id="gigaSpace" space="space" tx-manager="transactionManager" />
+    <os-core:giga-space id="gigaSpace" space="space" tx-manager="transactionManager" />
 
-	<!-- Defines a transaction manager -->
-	<os-core:distributed-tx-manager id="transactionManager" />
+    <!-- Defines a transaction manager -->
+    <os-core:distributed-tx-manager id="transactionManager" />
 </beans>

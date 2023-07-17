@@ -24,7 +24,6 @@ public class Person_Tziun_KursServiceCatalogImpl implements ServiceCatalog {
         jsonObject.addProperty("description", "Get Tizun by Kurs");
         jsonObject.addProperty("reqested feilds", "PERSON_IDNO format: ^[0-9]{9}$ TL_KURS_SEM_KVUTZA format: ^[0-9]{5}$");
 
-
         JsonArray jsonArray = new JsonArray();
         jsonArray.add("STUD.TA_PERSON");
         jsonArray.add("STUD.TL_TOCHNIT");

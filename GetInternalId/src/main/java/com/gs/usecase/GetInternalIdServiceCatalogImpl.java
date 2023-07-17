@@ -16,6 +16,7 @@ public class GetInternalIdServiceCatalogImpl implements ServiceCatalog {
 
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("endpoint", "STUD.TA_PERSON");
+        jsonObject.addProperty("project", "STUD");
         jsonObject.addProperty("description", "Get K_PNIMI BY IDNO");
         jsonObject.addProperty("reqested feilds", "IDNO,");
 
