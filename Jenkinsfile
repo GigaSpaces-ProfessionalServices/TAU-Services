@@ -17,7 +17,7 @@ pipeline {
             description: 'Choose the target branch', 
             listSize: '0', 
             name: 'BRANCH', 
-            quickFilterEnabled: false, 
+            quickFilterEnabled: true, 
             requiredParameter: true, 
             selectedValue: 'NONE', 
             sortMode: 'NONE', 
