@@ -12,7 +12,7 @@ pipeline {
         
         gitParameter (
             branch: '', 
-            branchFilter: 'origin/(.*)', 
+            branchFilter: 'origin/(?!main)(.*)', 
             defaultValue: '', 
             description: 'Choose the target branch', 
             listSize: '0', 
