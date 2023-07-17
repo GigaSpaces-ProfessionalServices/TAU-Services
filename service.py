@@ -215,12 +215,12 @@ def test_service_health():
     ssl_root = f"ssl/{env_name}"
     if os.path.exists(ssl_root):
         try:
-            ca_file = glob(f"{ssl_root}/ca/*.cer")[0]
+            ca_file = glob(f"{ssl_root}/ca/*.crt")[0]
         except:
             print("[ERROR] health check aborted. CA certificate could not be found.")
             return
         try:
-            cert_file = glob(f"{ssl_root}/cert/*.cer")[0]
+            cert_file = glob(f"{ssl_root}/cert/*.crt")[0]
         except:
             print("[ERROR] health check aborted. certificate could not be found.")
             return
