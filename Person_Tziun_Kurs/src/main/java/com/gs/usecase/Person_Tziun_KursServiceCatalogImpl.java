@@ -29,6 +29,7 @@ public class Person_Tziun_KursServiceCatalogImpl implements ServiceCatalog {
         jsonArray.add("STUD.TL_TOCHNIT");
         jsonArray.add("STUD.TL_KURS");
         jsonArray.add("STUD.TB_071_SIMUL_TZIUN");
+        jsonArray.add("STUD.KR_KURS");
         jsonArray.add("STUD.TB_002_OFEN_HORAA");
 
         jsonObject.add("metadata", jsonArray);
