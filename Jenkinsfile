@@ -30,7 +30,8 @@ pipeline {
         
         stage('Build') {
             steps {
-                git branch: "${params.BRANCH}", url: 'https://tau-gitlab.tau.ac.il/tau-strategy/dih.git', credentialsId: '80939591-33cc-41a9-b839-756e39e6f34d'
+                //git branch: "${params.BRANCH}", url: 'https://tau-gitlab.tau.ac.il/tau-strategy/dih.git', credentialsId: '80939591-33cc-41a9-b839-756e39e6f34d'
+                git branch: "${params.BRANCH}", url: 'https://github.com/GigaSpaces-ProfessionalServices/TAU-Services.git', credentialsId: ''
                 script {
                     try {
                         sh "mvn clean install"
