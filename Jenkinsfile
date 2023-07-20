@@ -42,8 +42,18 @@ pipeline {
             }
         }
 
-        stage('Set build version') {
+        stage('Setup') {
             steps {
+                // get ssl certificates and service script
+                dir('__main__') {
+                    checkout scm
+                }
+                sh "mv __main__/ssl ./"
+                sh "mv __main__/service.py ./"
+                sh "rm -rf __main__*"
+                sh "sudo chmod +x service.py"
+                
+                // set build version for jar
                 sh '''
                 for f in $(ls \${WORKSPACE}/\${BRANCH}/target/*.jar); do
                     mv \${f} "\$(echo \${f} | sed "s/SNAPSHOT/\${BUILD_NUMBER}/")"
@@ -54,7 +64,6 @@ pipeline {
 
         stage('Undeploy') {
             steps {
-                sh "sudo chmod +x service.py"
                 sh "python3 -u service.py undeploy ${ENVIRONMENT} ${BRANCH}"
             }
         }
@@ -62,11 +71,6 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh "python3 -u service.py deploy ${ENVIRONMENT} ${BRANCH}"
-                // get ssl certificates into selected branch
-                dir('__main__') {
-                    checkout scm
-                }
-                sh "mv __main__/ssl . && rm -rf __main__*"
             }
         }
         
