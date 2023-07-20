@@ -178,7 +178,7 @@ def deploy_service():
             "consul.host": "localhost", 
             "minPort": 8115, 
             "maxPort": 8311,
-            "space": "dih-tau-space"
+            "space": "bllspace"
         }
         }).replace("'",'"')
     deploy_pu_data = requests.post(base_url, data=payload, headers=h)
