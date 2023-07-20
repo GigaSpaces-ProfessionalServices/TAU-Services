@@ -2,6 +2,11 @@ pipeline {
     
     agent any
     
+    environment {
+        GIT_URL = 'https://github.com/GigaSpaces-ProfessionalServices/TAU-Services.git'
+        GIT_CREDS = ''
+    }
+
     parameters {
         
         choice (
@@ -31,7 +36,7 @@ pipeline {
         stage('Build') {
             steps {
                 //git branch: "${params.BRANCH}", url: 'https://tau-gitlab.tau.ac.il/tau-strategy/dih.git', credentialsId: '80939591-33cc-41a9-b839-756e39e6f34d'
-                git branch: "${params.BRANCH}", url: 'https://github.com/GigaSpaces-ProfessionalServices/TAU-Services.git', credentialsId: ''
+                git branch: "${params.BRANCH}", url: ${GIT_URL}, credentialsId: ${GIT_CREDS}
                 script {
                     try {
                         sh "mvn clean install"
