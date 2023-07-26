@@ -34,8 +34,8 @@ public class KR_CHEDERResponse implements ServiceResponse {
     String K_MIS_CHEDER;
     String K_ZIHUY_NOSAF;
     String AZARIM;
-    BigDecimal KIBOLET;
-    BigDecimal KIBOLET_BCHINA;
+    Short KIBOLET;
+    Short KIBOLET_BCHINA;
     String PAIL;
     BigDecimal SHETACH;
     String SHIBUTZ;
@@ -51,8 +51,8 @@ public class KR_CHEDERResponse implements ServiceResponse {
     public void setK_MIS_CHEDER(String k_MIS_CHEDER) {K_MIS_CHEDER = k_MIS_CHEDER;}
     public void setK_ZIHUY_NOSAF(String k_ZIHUY_NOSAF) {K_ZIHUY_NOSAF = k_ZIHUY_NOSAF;}
     public void setAZARIM(String AZARIM) {this.AZARIM = AZARIM;}
-    public void setKIBOLET(BigDecimal KIBOLET) {this.KIBOLET = KIBOLET;}
-    public void setKIBOLET_BCHINA(BigDecimal KIBOLET_BCHINA) {this.KIBOLET_BCHINA = KIBOLET_BCHINA;}
+    public void setKIBOLET(Short KIBOLET) {this.KIBOLET = KIBOLET;}
+    public void setKIBOLET_BCHINA(Short KIBOLET_BCHINA) {this.KIBOLET_BCHINA = KIBOLET_BCHINA;}
     public void setPAIL(String PAIL) {this.PAIL = PAIL;}
     public void setSHETACH(BigDecimal SHETACH) {this.SHETACH = SHETACH;}
     public void setSHIBUTZ(String SHIBUTZ) {this.SHIBUTZ = SHIBUTZ;}

@@ -1,5 +1,7 @@
 package com.gs.usecase;
 
+import com.gs.lib.grid.*;
+import org.openspaces.core.*;
 import tau.ods.gs.model.logging.LogBuilder;
 import tau.ods.gs.model.logging.LogMessage;
 import com.gs.infra.service.ErrorServiceResponse;
@@ -22,6 +24,26 @@ public class Person_Tziun_KursApiTask extends GeneralTask<Person_Tziun_KursReque
 //    private static final Logger logger_service = tau.ods.gs.model.logging.LoggerFactory.getLogger(Person_Tziun_KursApiTask.class);
     static private final String type = "STUD.Person_Tziun_Kurs";
 
+    public RefTableLookup<SpaceDocument> kr_kursLookup;
+    public RefTableLookup<SpaceDocument> ta_personLookup;
+    public RefTableLookup<SpaceDocument> tb_002_ofen_horaaLookup;
+    public RefTableLookup<SpaceDocument> tb_071_simul_tziunLookup;
+    public RefTableLookup<SpaceDocument> tl_tochnitLookup;
+
+    private void initLookups() {
+        GigaSpace lookupProxy = (refDocTableCache != null) ? refDocTableCache.getCachedSpace() : null;
+
+        if (lookupProxy == null) {
+            lookupProxy = gigaSpace;
+        }
+
+        kr_kursLookup = new RefTableLookup<SpaceDocument>(lookupProxy, "STUD.KR_KURS");
+        ta_personLookup = new RefTableLookup<SpaceDocument>(lookupProxy, "STUD.TA_PERSON");
+        tb_002_ofen_horaaLookup = new RefTableLookup<SpaceDocument>(lookupProxy, "STUD.TB_002_OFEN_HORAA");
+        tb_071_simul_tziunLookup = new RefTableLookup<SpaceDocument>(lookupProxy, "STUD.TB_071_SIMUL_TZIUN");
+        tl_tochnitLookup = new RefTableLookup<SpaceDocument>(lookupProxy, "STUD.TL_TOCHNIT");
+    }
+
 
     public ArrayList execute() {
 
@@ -29,6 +51,8 @@ public class Person_Tziun_KursApiTask extends GeneralTask<Person_Tziun_KursReque
         String query = null;
         String idno = request.getPERSON_IDNO();
         String semKvutza = request.getTL_KURS_SEM_KVUTZA();
+
+        initLookups();
 
         ArrayList responseList = new ArrayList<>();
 

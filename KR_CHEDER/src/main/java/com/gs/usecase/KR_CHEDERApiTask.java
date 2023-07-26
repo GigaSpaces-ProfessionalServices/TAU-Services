@@ -148,7 +148,7 @@ public class KR_CHEDERApiTask extends GeneralTask<KR_CHEDERRequest, KR_CHEDERRes
             return responseList;
         }
 
-        if (misCheder.equals("null")){
+        if (misCheder == null || misCheder.equals("null")){
 
             USECASE_QUERY = "K_BINYAN" + " = %s ";
 
