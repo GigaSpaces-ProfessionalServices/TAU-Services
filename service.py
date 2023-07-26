@@ -211,16 +211,19 @@ def test_service_health():
     nb_domain = str(nbconf).rstrip('\n').replace('"','').split('=')[1]
     base_url = f'https://{nb_domain}:8443/{service}/v1/actuator/health'
     
+    # supported ssl extensions
+    cert_types = ('*.cer', '*.crt')
+    
     # check if the directory for selected environment exists
     ssl_root = f"ssl/{env_name}"
     if os.path.exists(ssl_root):
         try:
-            ca_file = glob(f"{ssl_root}/ca/*.cer")[0]
+            ca_file = [glob(f"{ssl_root}/ca/{t}") for t in cert_types][0]
         except:
             print("[ERROR] health check aborted. CA certificate could not be found.")
             return
         try:
-            cert_file = glob(f"{ssl_root}/cert/*.cer")[0]
+            cert_file = [glob(f"{ssl_root}/cert/{t}") for t in cert_types][0]
         except:
             print("[ERROR] health check aborted. certificate could not be found.")
             return

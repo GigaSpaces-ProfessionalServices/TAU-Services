@@ -2,6 +2,11 @@ pipeline {
     
     agent any
     
+    environment {
+        GIT_URL = 'https://github.com/GigaSpaces-ProfessionalServices/TAU-Services.git'
+        GIT_CREDS = ''
+    }
+
     parameters {
         
         choice (
@@ -12,12 +17,12 @@ pipeline {
         
         gitParameter (
             branch: '', 
-            branchFilter: 'origin/(.*)', 
+            branchFilter: 'origin/(?!main)(.*)', 
             defaultValue: '', 
             description: 'Choose the target branch', 
             listSize: '0', 
             name: 'BRANCH', 
-            quickFilterEnabled: false, 
+            quickFilterEnabled: true, 
             requiredParameter: true, 
             selectedValue: 'NONE', 
             sortMode: 'NONE', 
@@ -30,7 +35,7 @@ pipeline {
         
         stage('Build') {
             steps {
-                git branch: "${params.BRANCH}", url: 'https://tau-gitlab.tau.ac.il/tau-strategy/dih.git', credentialsId: '80939591-33cc-41a9-b839-756e39e6f34d'
+                git branch: "${params.BRANCH}", url: "${env.GIT_URL}", credentialsId: "${env.GIT_CREDS}"
                 script {
                     try {
                         sh "mvn clean install"
@@ -42,8 +47,18 @@ pipeline {
             }
         }
 
-        stage('Set build version') {
+        stage('Setup') {
             steps {
+                // get ssl certificates and service script
+                dir('__main__') {
+                    checkout scm
+                }
+                sh "mv __main__/ssl ./"
+                sh "mv __main__/service.py ./"
+                sh "rm -rf __main__*"
+                sh "sudo chmod +x service.py"
+                
+                // set build version for jar
                 sh '''
                 for f in $(ls \${WORKSPACE}/\${BRANCH}/target/*.jar); do
                     mv \${f} "\$(echo \${f} | sed "s/SNAPSHOT/\${BUILD_NUMBER}/")"
@@ -54,7 +69,6 @@ pipeline {
 
         stage('Undeploy') {
             steps {
-                sh "sudo chmod +x service.py"
                 sh "python3 -u service.py undeploy ${ENVIRONMENT} ${BRANCH}"
             }
         }
@@ -62,11 +76,6 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh "python3 -u service.py deploy ${ENVIRONMENT} ${BRANCH}"
-                // get ssl certificates into selected branch
-                dir('__main__') {
-                    checkout scm
-                }
-                sh "mv __main__/ssl . && rm -rf __main__*"
             }
         }
         
