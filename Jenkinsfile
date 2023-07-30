@@ -39,7 +39,7 @@ pipeline {
                 script {
                     try {
                         sh "mvn clean install"
-                        sh "mvn clean install -f ${params.BRANCH}/pom-runtime.xml"
+                        // sh "mvn clean install -f ${params.BRANCH}/pom-runtime.xml"
                     } catch (Exception e) {
                         error("Failed to execute 'mvn install'")
                     }
