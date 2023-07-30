@@ -120,8 +120,10 @@ public class Person_Tziun_KursJdbcTask extends GeneralTask<Person_Tziun_KursRequ
             "STUD.TA_PERSON pr\n" + // ##### 500K #####
             "join  STUD.TL_TOCHNIT tl \n" + // ##### 1M #####
             "on tl.k_pnimi=pr.k_pnimi \n" +
+            "AND tl.K_PNIMI = %s \n" + // Test 1
             "join STUD.TL_KURS tlkr \n" + // ##### 12M #####
             "on  tlkr.K_PNIMI = tl.K_PNIMI \n" +
+            "AND tlkr.K_PNIMI = %s \n" + // Test1
             "AND tlkr.K_SIDURI_TOCHNIT = tl.K_SIDURI_TOCHNIT \n" +
             "AND tlkr.K_SIDURI_TOAR = tl.K_SIDURI_TOAR \n" +
             "RIGHT OUTER JOIN STUD.TB_071_SIMUL_TZIUN t071 \n" + // ##### 23 #####
@@ -149,8 +151,7 @@ public class Person_Tziun_KursJdbcTask extends GeneralTask<Person_Tziun_KursRequ
 
     public ArrayList<Person_Tziun_KursResponse> execute() {
 
-        String query = String.format(USECASE_QUERY, request.getPERSON_IDNO(), request.getPERSON_IDNO(), request.getTL_KURS_SEM_KVUTZA(), request.getLimit());
-        //String query = USECASE_QUERY3;
+        String query = String.format(USECASE_QUERY, request.getPERSON_IDNO(), request.getPERSON_IDNO(), request.getPERSON_IDNO(), request.getPERSON_IDNO(), request.getTL_KURS_SEM_KVUTZA(), request.getLimit());
 
         // A list to store the results
         ArrayList<Person_Tziun_KursResponse> responseList = new ArrayList<>();
