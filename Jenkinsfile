@@ -7,28 +7,28 @@ pipeline {
         GIT_CREDS = ''
     }
 
-    parameters {
-        choice (
-            choices: ['Development', 'Stage', 'Production'], 
-            description: 'Choose the preferred environment for deployment', 
-            name: 'ENVIRONMENT'
-            )
+    // parameters {
+    //     choice (
+    //         choices: ['Development', 'Stage', 'Production'], 
+    //         description: 'Choose the preferred environment for deployment', 
+    //         name: 'ENVIRONMENT'
+    //         )
         
-        gitParameter (
-            branch: '', 
-            branchFilter: 'origin/(?!main)(.*)', 
-            defaultValue: '', 
-            description: 'Choose the target branch', 
-            listSize: '0', 
-            name: 'BRANCH', 
-            quickFilterEnabled: true, 
-            requiredParameter: true, 
-            selectedValue: 'NONE', 
-            sortMode: 'NONE', 
-            tagFilter: '*', 
-            type: 'PT_BRANCH'
-            )
-        }
+    //     gitParameter (
+    //         branch: '', 
+    //         branchFilter: 'origin/(?!main)(.*)', 
+    //         defaultValue: '', 
+    //         description: 'Choose the target branch', 
+    //         listSize: '0', 
+    //         name: 'BRANCH', 
+    //         quickFilterEnabled: true, 
+    //         requiredParameter: true, 
+    //         selectedValue: 'NONE', 
+    //         sortMode: 'NONE', 
+    //         tagFilter: '*', 
+    //         type: 'PT_BRANCH'
+    //         )
+    //     }
     
     stages {
         
