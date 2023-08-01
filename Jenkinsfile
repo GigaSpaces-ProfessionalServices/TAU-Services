@@ -30,26 +30,26 @@ pipeline {
                     // Save the selected fruit in a variable
                     def selectedFruit = userInput[0]
 
-                    // // Determine additional parameters based on the selected fruit
-                    // def additionalParameters
-                    // switch (selectedFruit) {
-                    //     case 'Apple':
-                    //         additionalParameters = [
-                    //             string(name: 'APPLE_TYPE', defaultValue: 'Fuji', description: 'Type of Apple')
-                    //         ]
-                    //         break
-                    //     case 'Orange':
-                    //         additionalParameters = [
-                    //             string(name: 'ORANGE_SIZE', defaultValue: 'Medium', description: 'Size of Orange')
-                    //         ]
-                    //         break
-                    //     case 'Banana':
-                    //         additionalParameters = [
-                    //             string(name: 'BANANA_RIPENESS', defaultValue: 'Slightly Ripe', description: 'Ripeness of Banana')
-                    //         ]
-                    //         break
-                    // }
-
+                    // Determine additional parameters based on the selected fruit
+                    def additionalParameters
+                    switch (selectedFruit) {
+                        case 'Apple':
+                            additionalParameters = [
+                                string(name: 'APPLE_TYPE', defaultValue: 'Fuji', description: 'Type of Apple')
+                            ]
+                            break
+                        case 'Orange':
+                            additionalParameters = [
+                                string(name: 'ORANGE_SIZE', defaultValue: 'Medium', description: 'Size of Orange')
+                            ]
+                            break
+                        case 'Banana':
+                            additionalParameters = [
+                                string(name: 'BANANA_RIPENESS', defaultValue: 'Slightly Ripe', description: 'Ripeness of Banana')
+                            ]
+                            break
+                    }
+                    sh "echo \"user selected ${selectedFruit} of type ${additionalParameters[0]}\""
                     // // Present additional parameters based on the selected fruit
                     // def additionalUserInput = input(
                     //     message: "Additional parameters for $selectedFruit:",
