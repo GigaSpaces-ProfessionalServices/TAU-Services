@@ -41,6 +41,7 @@ pipeline {
             steps {
                 script {
                     if ( OPT == 'Create' ) {
+                        params.ENVIRONMENT = "None"
                         sh "echo \"Environment Create = ${params.ENVIRONMENT}\""
                     }
                     if ( OPT == 'Deploy' ) {
