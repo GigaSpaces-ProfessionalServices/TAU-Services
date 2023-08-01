@@ -11,7 +11,7 @@ pipeline {
         choice (
             choices: ['Create', 'Deploy', 'Create and deploy'], 
             description: 'Choose your preferred actions for a new service', 
-            name: 'OPT'
+            name: 'ACTION'
             )
         choice (
             choices: ['Development', 'Stage', 'Production'], 
@@ -40,15 +40,15 @@ pipeline {
         stage('dev') {
             steps {
                 script {
-                    if ( OPT == 'Create' ) {
+                    if ( params.ACTION == 'Create' ) {
                         def env = "None"
                         sh "echo \"Environment Create = ${env}\""
                     }
-                    if ( OPT == 'Deploy' ) {
+                    if ( params.ACTION == 'Deploy' ) {
                         def env = ${params.ENVIRONMENT}
                         sh "echo \"Environment Deploy = ${env}\""
                     }
-                    if ( OPT == 'Create and deploy' ) {
+                    if ( params.ACTION == 'Create and deploy' ) {
                         def env = ${params.ENVIRONMENT}
                         sh "echo \"Environment Both = ${env}\""
                     }
