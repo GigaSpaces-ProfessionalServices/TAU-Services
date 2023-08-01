@@ -41,14 +41,16 @@ pipeline {
             steps {
                 script {
                     if ( OPT == 'Create' ) {
-                        params.ENVIRONMENT = "None"
-                        sh "echo \"Environment Create = ${params.ENVIRONMENT}\""
+                        def env = "None"
+                        sh "echo \"Environment Create = ${env}\""
                     }
                     if ( OPT == 'Deploy' ) {
-                        sh "echo \"Environment Deploy = ${params.ENVIRONMENT}\""
+                        def env = ${params.ENVIRONMENT}
+                        sh "echo \"Environment Deploy = ${env}\""
                     }
                     if ( OPT == 'Create and deploy' ) {
-                        sh "echo \"Environment Both = ${params.ENVIRONMENT}\""
+                        def env = ${params.ENVIRONMENT}
+                        sh "echo \"Environment Both = ${env}\""
                     }
                 }
                 // sh "echo \"Environment = ${params.ENVIRONMENT}\""
