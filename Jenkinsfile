@@ -1,123 +1,56 @@
 pipeline {
-    
     agent any
-    
-    environment {
-        GIT_URL = 'https://github.com/GigaSpaces-ProfessionalServices/TAU-Services.git'
-        GIT_CREDS = ''
-    }
-
-    // parameters {
-    //     choice (
-    //         choices: ['Development', 'Stage', 'Production'], 
-    //         description: 'Choose the preferred environment for deployment', 
-    //         name: 'ENVIRONMENT'
-    //         )
-        
-    //     gitParameter (
-    //         branch: '', 
-    //         branchFilter: 'origin/(?!main)(.*)', 
-    //         defaultValue: '', 
-    //         description: 'Choose the target branch', 
-    //         listSize: '0', 
-    //         name: 'BRANCH', 
-    //         quickFilterEnabled: true, 
-    //         requiredParameter: true, 
-    //         selectedValue: 'NONE', 
-    //         sortMode: 'NONE', 
-    //         tagFilter: '*', 
-    //         type: 'PT_BRANCH'
-    //         )
-    //     }
-    
     stages {
-        
-        stage('dev') {
+        stage('Choose Fruit') {
             steps {
                 script {
-                    if ( ENVIRONMENT == 'Development' ) {
-                        def userInput = input(
-                            id: 'userInput', message: 'Let\'s promote?', parameters: [
-                                [$class: 'TextParameterDefinition', defaultValue: 'uat', description: 'Environment', name: 'env'],
-                                [$class: 'TextParameterDefinition', defaultValue: 'uat1', description: 'Target', name: 'target']
+                    // Present choice for selecting the fruit
+                    def userInput = input(
+                        message: 'Choose your favorite fruit:',
+                        parameters: [
+                            choice(name: 'FRUIT_CHOICE', choices: 'Apple\nOrange\nBanana', description: 'Select your fruit')
+                        ]
+                    )
+
+                    // Save the selected fruit in a variable
+                    def selectedFruit = userInput['FRUIT_CHOICE']
+
+                    // Determine additional parameters based on the selected fruit
+                    def additionalParameters
+                    switch (selectedFruit) {
+                        case 'Apple':
+                            additionalParameters = [
+                                string(name: 'APPLE_TYPE', defaultValue: 'Fuji', description: 'Type of Apple')
                             ]
-                        )
+                            break
+                        case 'Orange':
+                            additionalParameters = [
+                                string(name: 'ORANGE_SIZE', defaultValue: 'Medium', description: 'Size of Orange')
+                            ]
+                            break
+                        case 'Banana':
+                            additionalParameters = [
+                                string(name: 'BANANA_RIPENESS', defaultValue: 'Slightly Ripe', description: 'Ripeness of Banana')
+                            ]
+                            break
                     }
+
+                    // Present additional parameters based on the selected fruit
+                    def additionalUserInput = input(
+                        message: "Additional parameters for $selectedFruit:",
+                        parameters: additionalParameters
+                    )
+
+                    // You can access the values of additional parameters as follows:
+                    // def appleType = additionalUserInput['APPLE_TYPE']
+                    // def orangeSize = additionalUserInput['ORANGE_SIZE']
+                    // def bananaRipeness = additionalUserInput['BANANA_RIPENESS']
                 }
-                sh "echo \"Environment = ${env.ENVIRONMENT}\""
-                sh "echo \"Env = ${params.env}\""
-                sh "echo \"Target = ${params.target}\""
             }
         }
 
-        // stage('Build') {
-        //     steps {
-        //         git branch: "${params.BRANCH}", url: "${env.GIT_URL}", credentialsId: "${env.GIT_CREDS}"
-        //         script {
-        //             try {
-        //                 sh "mvn clean install"
-        //             } catch (Exception e) {
-        //                 error("Failed to execute 'mvn install'")
-        //             }
-        //         }
-        //     }
-        // }
-
-        // stage('Setup') {
-        //     steps {
-        //         // get ssl certificates and service script
-        //         dir('__main__') {
-        //             checkout scm
-        //         }
-        //         sh "if [ -d ssl ]; then rm -rf ./ssl ; fi"
-        //         sh "mv __main__/ssl ./"
-        //         sh "if [ -d service.py ]; then rm -f ./service.py ; fi"
-        //         sh "mv __main__/service.py ./"
-        //         sh "rm -rf __main__*"
-        //         sh "sudo chmod +x service.py"
-                
-        //         // set build version for jar
-        //         sh '''
-        //         for f in $(ls \${WORKSPACE}/\${BRANCH}/target/*.jar); do
-        //             mv \${f} "\$(echo \${f} | sed "s/SNAPSHOT/\${BUILD_NUMBER}/")"
-        //         done
-        //         '''
-        //     }
-        // }
-
-        // stage('Undeploy') {
-        //     steps {
-        //         script {
-        //             try {
-        //                 sh "python3 -u service.py undeploy ${ENVIRONMENT} ${BRANCH}"
-        //             } catch (Exception e) {
-        //                 error("Failed to undeploy service")
-        //             }
-        //         }
-        //     }
-        // }
-        
-        // stage('Deploy') {
-        //     steps {
-        //         script {
-        //             try {
-        //                 sh "python3 -u service.py deploy ${ENVIRONMENT} ${BRANCH}"
-        //             } catch (Exception e) {
-        //                 error("Failed to deploy service")
-        //             }
-        //         }
-        //     }
-        // }
-        
-        // stage('Test') {
-        //     steps {
-        //         sh "python3 -u service.py test ${ENVIRONMENT} ${BRANCH}"
-        //     }
-        // }
+        // Add more stages here to continue your pipeline based on user input
+        // For example, you can use the selected values to trigger different build steps.
+        // Or, you can use a declarative pipeline with parallel stages to perform actions concurrently based on choices.
     }
-    // post {
-    //     success {
-    //         // send resource file to a file repository (S3, NFS etc...)
-    //     }
-    // }
 }
