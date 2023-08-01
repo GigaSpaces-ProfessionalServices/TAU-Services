@@ -28,7 +28,7 @@ pipeline {
                     )
 
                     // Save the selected fruit in a variable
-                    def selectedFruit = userInput[0]
+                    def selectedFruit = userInput['FRUIT_CHOICE']
 
                     // // Determine additional parameters based on the selected fruit
                     // def additionalParameters
