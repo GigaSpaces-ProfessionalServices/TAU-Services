@@ -8,7 +8,6 @@ pipeline {
     }
 
     parameters {
-        
         choice (
             choices: ['Development', 'Stage', 'Production'], 
             description: 'Choose the preferred environment for deployment', 
@@ -33,57 +32,88 @@ pipeline {
     
     stages {
         
-        stage('Build') {
+        stage('dev') {
             steps {
-                git branch: "${params.BRANCH}", url: "${env.GIT_URL}", credentialsId: "${env.GIT_CREDS}"
                 script {
-                    try {
-                        sh "mvn clean install"
-                        // sh "mvn clean install -f ${params.BRANCH}/pom-runtime.xml"
-                    } catch (Exception e) {
-                        error("Failed to execute 'mvn install'")
+                    if ( ENVIRONMENT == 'Development' ) {
+                        def userInput = input(
+                            id: 'userInput', message: 'Let\'s promote?', parameters: [
+                                [$class: 'TextParameterDefinition', defaultValue: 'uat', description: 'Environment', name: 'env'],
+                                [$class: 'TextParameterDefinition', defaultValue: 'uat1', description: 'Target', name: 'target']
+                            ]
+                        )
                     }
                 }
+                sh "echo \"Environment = ${env.ENVIRONMENT}\""
+                sh "echo \"Env = ${params.env}\""
+                sh "echo \"Target = ${params.target}\""
             }
         }
 
-        stage('Setup') {
-            steps {
-                // get ssl certificates and service script
-                dir('__main__') {
-                    checkout scm
-                }
-                sh "mv __main__/ssl ./"
-                sh "mv __main__/service.py ./"
-                sh "rm -rf __main__*"
-                sh "sudo chmod +x service.py"
+        // stage('Build') {
+        //     steps {
+        //         git branch: "${params.BRANCH}", url: "${env.GIT_URL}", credentialsId: "${env.GIT_CREDS}"
+        //         script {
+        //             try {
+        //                 sh "mvn clean install"
+        //             } catch (Exception e) {
+        //                 error("Failed to execute 'mvn install'")
+        //             }
+        //         }
+        //     }
+        // }
+
+        // stage('Setup') {
+        //     steps {
+        //         // get ssl certificates and service script
+        //         dir('__main__') {
+        //             checkout scm
+        //         }
+        //         sh "if [ -d ssl ]; then rm -rf ./ssl ; fi"
+        //         sh "mv __main__/ssl ./"
+        //         sh "if [ -d service.py ]; then rm -f ./service.py ; fi"
+        //         sh "mv __main__/service.py ./"
+        //         sh "rm -rf __main__*"
+        //         sh "sudo chmod +x service.py"
                 
-                // set build version for jar
-                sh '''
-                for f in $(ls \${WORKSPACE}/\${BRANCH}/target/*.jar); do
-                    mv \${f} "\$(echo \${f} | sed "s/SNAPSHOT/\${BUILD_NUMBER}/")"
-                done
-                '''
-            }
-        }
+        //         // set build version for jar
+        //         sh '''
+        //         for f in $(ls \${WORKSPACE}/\${BRANCH}/target/*.jar); do
+        //             mv \${f} "\$(echo \${f} | sed "s/SNAPSHOT/\${BUILD_NUMBER}/")"
+        //         done
+        //         '''
+        //     }
+        // }
 
-        stage('Undeploy') {
-            steps {
-                sh "python3 -u service.py undeploy ${ENVIRONMENT} ${BRANCH}"
-            }
-        }
+        // stage('Undeploy') {
+        //     steps {
+        //         script {
+        //             try {
+        //                 sh "python3 -u service.py undeploy ${ENVIRONMENT} ${BRANCH}"
+        //             } catch (Exception e) {
+        //                 error("Failed to undeploy service")
+        //             }
+        //         }
+        //     }
+        // }
         
-        stage('Deploy') {
-            steps {
-                sh "python3 -u service.py deploy ${ENVIRONMENT} ${BRANCH}"
-            }
-        }
+        // stage('Deploy') {
+        //     steps {
+        //         script {
+        //             try {
+        //                 sh "python3 -u service.py deploy ${ENVIRONMENT} ${BRANCH}"
+        //             } catch (Exception e) {
+        //                 error("Failed to deploy service")
+        //             }
+        //         }
+        //     }
+        // }
         
-        stage('Test') {
-            steps {
-                sh "python3 -u service.py test ${ENVIRONMENT} ${BRANCH}"
-            }
-        }
+        // stage('Test') {
+        //     steps {
+        //         sh "python3 -u service.py test ${ENVIRONMENT} ${BRANCH}"
+        //     }
+        // }
     }
     // post {
     //     success {
