@@ -45,11 +45,11 @@ pipeline {
                         sh "echo \"Environment Create = ${env}\""
                     }
                     if ( params.ACTION == 'Deploy' ) {
-                        def env = ${params.ENVIRONMENT}
+                        def env = params.ENVIRONMENT
                         sh "echo \"Environment Deploy = ${env}\""
                     }
                     if ( params.ACTION == 'Create and deploy' ) {
-                        def env = ${params.ENVIRONMENT}
+                        def env = params.ENVIRONMENT
                         sh "echo \"Environment Both = ${env}\""
                     }
                 }
