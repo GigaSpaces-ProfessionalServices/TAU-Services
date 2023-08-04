@@ -10,21 +10,21 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.gigaspaces.tau</groupId>
-    <artifactId>Person_Tziun_Kurs</artifactId>
-    <version>1.2-SNAPSHOT</version>
+    <artifactId>Person_Schedule</artifactId>
+    <version>1.1-SNAPSHOT</version>
 
     <dependencies>
         <dependency>
             <groupId>org.gigaspaces</groupId>
             <artifactId>xap-openspaces</artifactId>
             <version>${gs.version}</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.gigaspaces</groupId>
             <artifactId>xap-datagrid</artifactId>
             <version>${gs.version}</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.gigaspaces.tau</groupId>
@@ -50,20 +50,20 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
-            <scope>provided</scope>
+            <version>1.7.5</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
             <version>${spring.framework.version}</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
             <version>${spring.framework.version}</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.fasterxml</groupId>
@@ -75,13 +75,13 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-jdk14</artifactId>
             <version>${slf4j.version}</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.gigaspaces</groupId>
             <artifactId>xap-jdbc</artifactId>
             <version>${gs.version}</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

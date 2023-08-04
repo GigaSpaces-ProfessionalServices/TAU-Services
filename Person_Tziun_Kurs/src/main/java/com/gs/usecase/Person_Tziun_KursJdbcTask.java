@@ -114,8 +114,8 @@ public class Person_Tziun_KursJdbcTask extends GeneralTask<Person_Tziun_KursRequ
             "kr.OFEN_HORAA1,\n" +
             "t002.TEUR_K1,\n" +
             "t002.TEUR_ENG_K1,\n" +
-            "t071.TEUR,\n" +
-            "t071.TEUR_ENG \n" +
+            "t071.TEUR t071_TEUR,\n" +
+            "t071.TEUR_ENG t071_TEUR_ENG\n" +
             "FROM\n" +
             "STUD.TA_PERSON pr\n" + // ##### 500K #####
             "join  STUD.TL_TOCHNIT tl \n" + // ##### 1M #####
@@ -126,12 +126,12 @@ public class Person_Tziun_KursJdbcTask extends GeneralTask<Person_Tziun_KursRequ
             "AND tlkr.K_PNIMI = %s \n" + // Test1
             "AND tlkr.K_SIDURI_TOCHNIT = tl.K_SIDURI_TOCHNIT \n" +
             "AND tlkr.K_SIDURI_TOAR = tl.K_SIDURI_TOAR \n" +
-            "RIGHT OUTER JOIN STUD.TB_071_SIMUL_TZIUN t071 \n" + // ##### 23 #####
+            "LEFT OUTER JOIN STUD.TB_071_SIMUL_TZIUN t071 \n" + // ##### 23 #####
             "on tlkr.kod_tziun = t071.k_code \n" +
             "join STUD.KR_KURS kr \n" + // ##### 120K #####
             "on kr.k_kurs=tlkr.k_kurs \n" +
             "AND (tlkr.K_SEM >= kr.K_ME_SEM AND tlkr.K_SEM <= kr.AD_SEM) \n" +
-            "RIGHT OUTER JOIN STUD.TB_002_OFEN_HORAA t002 \n" + // ##### 20 #####
+            "LEFT OUTER JOIN STUD.TB_002_OFEN_HORAA t002 \n" + // ##### 20 #####
             "on kr.ofen_horaa1 = t002.k_code \n" +
             "WHERE \n" +
             "tlkr.MEVUTAL = '0' \n" +
@@ -172,6 +172,7 @@ public class Person_Tziun_KursJdbcTask extends GeneralTask<Person_Tziun_KursRequ
 
             try {
                 resultSet = stmt.executeQuery(query);
+
                  //resultSet = preparedStatement.executeQuery();
                 logger.info("##### Got the resultSet ##### " + resultSet);
             }catch(Throwable e){

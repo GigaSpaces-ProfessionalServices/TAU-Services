@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.burningwave:core:12.20.1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../../.m2/repository/org/burningwave/core/12.20.1/core-12.20.1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../../../../.m2/repository/org/burningwave/core/12.20.1/core-12.20.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../../../.m2/repository/org/burningwave/core/12.20.1/core-12.20.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

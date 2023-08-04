@@ -45,13 +45,11 @@ public class Person_Tziun_KursResponse implements ServiceResponse {
         setKR_KURS_SHAOT_UNI(rs.getBigDecimal("SHAOT_UNI"));
         setKR_KURS_MISHKAL(rs.getBigDecimal("MISHKAL"));
         setKR_KURS_LSHKLL(rs.getString("LSHKLL"));
-        setKR_KURS_LSHKLL(rs.getString("LSHKLL"));
         setKR_KURS_OFEN_HORAA1(rs.getString("OFEN_HORAA1"));
         setTB_002_OFEN_HORAA_TEUR_K1(rs.getString("TEUR_K1"));
         setTB_002_OFEN_HORAA_TEUR_ENG_K1(rs.getString("TEUR_ENG_K1"));
-        setTB_071_SIMUL_TZIUN_TEUR(rs.getString("TEUR"));
-        setTB_071_SIMUL_TZIUN_TEUR_ENG(rs.getString("TEUR_ENG"));
-        setTB_036_MATZAV_TZIUN_TEUR(rs.getString("TEUR"));
+        setTB_071_SIMUL_TZIUN_TEUR(rs.getString("t071_TEUR"));
+        setTB_071_SIMUL_TZIUN_TEUR_ENG(rs.getString("t071_TEUR_ENG"));
     }
 
     /*
@@ -92,13 +90,11 @@ public class Person_Tziun_KursResponse implements ServiceResponse {
         setKR_KURS_SHAOT_UNI(spaceDocument.getProperty("SHAOT_UNI"));
         setKR_KURS_MISHKAL(spaceDocument.getProperty("MISHKAL"));
         setKR_KURS_LSHKLL(spaceDocument.getProperty("LSHKLL"));
-        setKR_KURS_LSHKLL(spaceDocument.getProperty("LSHKLL"));
         setKR_KURS_OFEN_HORAA1(spaceDocument.getProperty("OFEN_HORAA1"));
         setTB_002_OFEN_HORAA_TEUR_K1(spaceDocument.getProperty("TEUR_K1"));
         setTB_002_OFEN_HORAA_TEUR_ENG_K1(spaceDocument.getProperty("TEUR_ENG_K1"));
         setTB_071_SIMUL_TZIUN_TEUR(spaceDocument.getProperty("TEUR"));
         setTB_071_SIMUL_TZIUN_TEUR_ENG(spaceDocument.getProperty("TEUR_ENG"));
-        setTB_036_MATZAV_TZIUN_TEUR(spaceDocument.getProperty("TEUR"));
     }
 
 
@@ -140,7 +136,6 @@ public class Person_Tziun_KursResponse implements ServiceResponse {
     String TB_002_OFEN_HORAA_TEUR_ENG_K1;
     String TB_071_SIMUL_TZIUN_TEUR;
     String TB_071_SIMUL_TZIUN_TEUR_ENG;
-    String TB_036_MATZAV_TZIUN_TEUR;
 
     public void setTL_KURS_K_PNIMI(BigDecimal TL_KURS_K_PNIMI) {
         this.TL_KURS_K_PNIMI = TL_KURS_K_PNIMI;
@@ -292,10 +287,6 @@ public class Person_Tziun_KursResponse implements ServiceResponse {
 
     public void setTB_071_SIMUL_TZIUN_TEUR_ENG(String TB_071_SIMUL_TZIUN_TEUR_ENG) {
         this.TB_071_SIMUL_TZIUN_TEUR_ENG = TB_071_SIMUL_TZIUN_TEUR_ENG;
-    }
-
-    public void setTB_036_MATZAV_TZIUN_TEUR(String TB_036_MATZAV_TZIUN_TEUR) {
-        this.TB_036_MATZAV_TZIUN_TEUR = TB_036_MATZAV_TZIUN_TEUR;
     }
  }
 
