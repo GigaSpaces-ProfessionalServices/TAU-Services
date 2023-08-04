@@ -41,6 +41,7 @@
         <module>common</module>
         <module>infra</module>
         <module>KR_CHEDER</module>
+        <module>GetInternalId</module>
         <module>Person_Tziun_Kurs</module>
         <module>Person_Schedule</module>
     </modules>
