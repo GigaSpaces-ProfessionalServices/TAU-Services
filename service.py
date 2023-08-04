@@ -182,21 +182,24 @@ def deploy_service():
         }
         }).replace("'",'"')
     deploy_pu_data = requests.post(base_url, data=payload, headers=h)
-    while deploy_pu_data.text is None:
-        sleep(1)
+    sleep(1)
+    if deploy_pu_data.text is None:
+        sleep(3)
     print(f"[INFO] operation: {get_request_desc(deploy_pu_data.text)} (id: {deploy_pu_data.text})")
     if deploy_pu_data.status_code in range(200,300):
         print("[INFO] deployed processing unit successfully")
         print(f"[INFO] waiting for service to instantiate...")
-        count, timeout = 0, 60
-        while count < timeout:
+        count = 0
+        init_timeout = 300
+        while count < init_timeout:
             if pu_intact(service):
                 break
             else:
                 count += 1
                 sleep(1)
-        if count == timeout:
-            print("[WARNING] deploy processing unit state unknown - timeout exceeded. check the logs or re-deploy")
+        if count == init_timeout:
+            print(f"[WARNING] deploy timeout ({init_timeout}s) exceeded - state unknown.")
+            exit(1)
         else:
             print(f"[INFO] service initialized successfully (in {count}sec)")
     else:
