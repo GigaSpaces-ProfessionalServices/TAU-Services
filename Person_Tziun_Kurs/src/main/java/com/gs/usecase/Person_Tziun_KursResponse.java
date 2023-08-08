@@ -2,6 +2,9 @@ package com.gs.usecase;
 
 import com.gs.infra.service.ServiceResponse;
 import com.gigaspaces.document.SpaceDocument;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.math.BigDecimal;
 import java.sql.*;
 
@@ -9,6 +12,8 @@ import java.sql.*;
  * a Response
  */
 public class Person_Tziun_KursResponse implements ServiceResponse {
+
+    private static final Logger logger = LoggerFactory.getLogger(Person_Tziun_KursResponse.class);
 
     public Person_Tziun_KursResponse(ResultSet rs) throws SQLException {
 
@@ -31,7 +36,7 @@ public class Person_Tziun_KursResponse implements ServiceResponse {
         setTL_KURS_MOED_KOVEA(rs.getString("MOED_KOVEA"));
         setTL_KURS_MATZAV_TZIUN(rs.getString("MATZAV_TZIUN"));
         setTL_KURS_PTOR(rs.getString("PTOR"));
-        setTL_KURS_LSHKLL(rs.getString("LSHKLL"));
+        setTL_KURS_LSHKLL(rs.getString("tlkr_LSHKLL"));
         setTL_KURS_HUSHLAM(rs.getString("HUSHLAM"));
         setTL_KURS_CHOZER(rs.getString("CHOZER"));
         setTL_KURS_KOVEA(rs.getString("KOVEA"));
@@ -44,12 +49,23 @@ public class Person_Tziun_KursResponse implements ServiceResponse {
         setKR_KURS_TEUR_ENG(rs.getString("TEUR_ENG"));
         setKR_KURS_SHAOT_UNI(rs.getBigDecimal("SHAOT_UNI"));
         setKR_KURS_MISHKAL(rs.getBigDecimal("MISHKAL"));
-        setKR_KURS_LSHKLL(rs.getString("LSHKLL"));
+        setKR_KURS_LSHKLL(rs.getString("kr_LSHKLL"));
         setKR_KURS_OFEN_HORAA1(rs.getString("OFEN_HORAA1"));
         setTB_002_OFEN_HORAA_TEUR_K1(rs.getString("TEUR_K1"));
         setTB_002_OFEN_HORAA_TEUR_ENG_K1(rs.getString("TEUR_ENG_K1"));
-        setTB_071_SIMUL_TZIUN_TEUR(rs.getString("t071_TEUR"));
-        setTB_071_SIMUL_TZIUN_TEUR_ENG(rs.getString("t071_TEUR_ENG"));
+
+        logger.debug("t071_TEUR" + rs.getString("t071_TEUR"));
+        logger.debug("t071_TEUR_ENG" + rs.getString("t071_TEUR_ENG"));
+
+        if (rs.getString("t071_TEUR") == null)
+            setT071_TEUR(" ");
+        else
+            setT071_TEUR(rs.getString("t071_TEUR"));
+
+        if (rs.getString("t071_TEUR_ENG") == null)
+            setT071_TEUR_ENG(" ");
+        else
+            setT071_TEUR_ENG(rs.getString("t071_TEUR_ENG"));
     }
 
     /*
@@ -76,7 +92,7 @@ public class Person_Tziun_KursResponse implements ServiceResponse {
         setTL_KURS_MOED_KOVEA(spaceDocument.getProperty("MOED_KOVEA"));
         setTL_KURS_MATZAV_TZIUN(spaceDocument.getProperty("MATZAV_TZIUN"));
         setTL_KURS_PTOR(spaceDocument.getProperty("PTOR"));
-        setTL_KURS_LSHKLL(spaceDocument.getProperty("LSHKLL"));
+        setTL_KURS_LSHKLL(spaceDocument.getProperty("tlkr_LSHKLL"));
         setTL_KURS_HUSHLAM(spaceDocument.getProperty("HUSHLAM"));
         setTL_KURS_CHOZER(spaceDocument.getProperty("CHOZER"));
         setTL_KURS_KOVEA(spaceDocument.getProperty("KOVEA"));
@@ -89,12 +105,12 @@ public class Person_Tziun_KursResponse implements ServiceResponse {
         setKR_KURS_TEUR_ENG(spaceDocument.getProperty("TEUR_ENG"));
         setKR_KURS_SHAOT_UNI(spaceDocument.getProperty("SHAOT_UNI"));
         setKR_KURS_MISHKAL(spaceDocument.getProperty("MISHKAL"));
-        setKR_KURS_LSHKLL(spaceDocument.getProperty("LSHKLL"));
+        setKR_KURS_LSHKLL(spaceDocument.getProperty("kr_LSHKLL"));
         setKR_KURS_OFEN_HORAA1(spaceDocument.getProperty("OFEN_HORAA1"));
         setTB_002_OFEN_HORAA_TEUR_K1(spaceDocument.getProperty("TEUR_K1"));
         setTB_002_OFEN_HORAA_TEUR_ENG_K1(spaceDocument.getProperty("TEUR_ENG_K1"));
-        setTB_071_SIMUL_TZIUN_TEUR(spaceDocument.getProperty("TEUR"));
-        setTB_071_SIMUL_TZIUN_TEUR_ENG(spaceDocument.getProperty("TEUR_ENG"));
+        setT071_TEUR(spaceDocument.getProperty("t071_TEUR"));
+        setT071_TEUR_ENG(spaceDocument.getProperty("t071_TEUR_ENG"));
     }
 
 
@@ -134,8 +150,8 @@ public class Person_Tziun_KursResponse implements ServiceResponse {
     String KR_KURS_OFEN_HORAA1;
     String TB_002_OFEN_HORAA_TEUR_K1;
     String TB_002_OFEN_HORAA_TEUR_ENG_K1;
-    String TB_071_SIMUL_TZIUN_TEUR;
-    String TB_071_SIMUL_TZIUN_TEUR_ENG;
+    String T071_TEUR;
+    String T071_TEUR_ENG;
 
     public void setTL_KURS_K_PNIMI(BigDecimal TL_KURS_K_PNIMI) {
         this.TL_KURS_K_PNIMI = TL_KURS_K_PNIMI;
@@ -281,12 +297,12 @@ public class Person_Tziun_KursResponse implements ServiceResponse {
         this.TB_002_OFEN_HORAA_TEUR_ENG_K1 = TB_002_OFEN_HORAA_TEUR_ENG_K1;
     }
 
-    public void setTB_071_SIMUL_TZIUN_TEUR(String TB_071_SIMUL_TZIUN_TEUR) {
-        this.TB_071_SIMUL_TZIUN_TEUR = TB_071_SIMUL_TZIUN_TEUR;
+    public void setT071_TEUR(String T071_TEUR) {
+        this.T071_TEUR = T071_TEUR;
     }
 
-    public void setTB_071_SIMUL_TZIUN_TEUR_ENG(String TB_071_SIMUL_TZIUN_TEUR_ENG) {
-        this.TB_071_SIMUL_TZIUN_TEUR_ENG = TB_071_SIMUL_TZIUN_TEUR_ENG;
+    public void setT071_TEUR_ENG(String T071_TEUR_ENG) {
+        this.T071_TEUR_ENG = T071_TEUR_ENG;
     }
  }
 

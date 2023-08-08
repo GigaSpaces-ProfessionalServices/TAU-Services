@@ -32,7 +32,7 @@ public class Person_Tziun_KursJdbcTask extends GeneralTask<Person_Tziun_KursRequ
     "tlkr.MOED_KOVEA,\n" +
     "tlkr.MATZAV_TZIUN,\n" +
     "tlkr.PTOR,\n" +
-    "tlkr.LSHKLL,\n" +
+    "tlkr.LSHKLL tlkr_LSHKLL,\n" +
     "tlkr.HUSHLAM,\n" +
     "tlkr.CHOZER,\n" +
     "tlkr.KOVEA,\n" +
@@ -45,7 +45,7 @@ public class Person_Tziun_KursJdbcTask extends GeneralTask<Person_Tziun_KursRequ
     "kr.TEUR_ENG,\n" +
     "kr.SHAOT_UNI AS KR_SHAOT_UNI,\n" +
     "kr.MISHKAL,\n" +
-    "kr.LSHKLL,\n" +
+    "kr.LSHKLL kr_LSHKLL,\n" +
     "kr.OFEN_HORAA1,\n" +
     "t002.TEUR_K1,\n" +
     "t002.TEUR_ENG_K1,\n" +
@@ -97,7 +97,7 @@ public class Person_Tziun_KursJdbcTask extends GeneralTask<Person_Tziun_KursRequ
             "tlkr.MOED_KOVEA,\n" +
             "tlkr.MATZAV_TZIUN,\n" +
             "tlkr.PTOR,\n" +
-            "tlkr.LSHKLL,\n" +
+            "tlkr.LSHKLL tlkr_LSHKLL,\n" +
             "tlkr.HUSHLAM,\n" +
             "tlkr.CHOZER,\n" +
             "tlkr.KOVEA,\n" +
@@ -110,7 +110,7 @@ public class Person_Tziun_KursJdbcTask extends GeneralTask<Person_Tziun_KursRequ
             "kr.TEUR_ENG,\n" +
             "kr.SHAOT_UNI AS KR_SHAOT_UNI,\n" +
             "kr.MISHKAL,\n" +
-            "kr.LSHKLL,\n" +
+            "kr.LSHKLL kr_LSHKLL,\n" +
             "kr.OFEN_HORAA1,\n" +
             "t002.TEUR_K1,\n" +
             "t002.TEUR_ENG_K1,\n" +
@@ -172,6 +172,16 @@ public class Person_Tziun_KursJdbcTask extends GeneralTask<Person_Tziun_KursRequ
 
             try {
                 resultSet = stmt.executeQuery(query);
+
+            ResultSetMetaData rsmd = resultSet.getMetaData();
+            int columnsNumber = rsmd.getColumnCount();
+           // List<String> rows = new ArrayList<>();
+            for (int k=1; k<= columnsNumber; k++) {
+            if (k > 1) System.out.print(",  ");
+            logger.debug(rsmd.getColumnName(k));
+           // int ti = rsmd.getColumnType(k);
+            logger.debug("ClassName" + rsmd.getColumnClassName(k));
+}
 
                  //resultSet = preparedStatement.executeQuery();
                 logger.info("##### Got the resultSet ##### " + resultSet);

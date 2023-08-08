@@ -14,28 +14,37 @@ public class Person_ScheduleResponse implements ServiceResponse {
 
         setKR_KURS_K_PNIMI(rs.getInt("K_PNIMI"));
         setPortal_Calendary_View_SEM_KVUTZA(rs.getString("SEM_KVUTZA"));
-        setKR_KURS_K_KURS(rs.getString("K_KURS"));
-        setKR_KURS_TEUR_K(rs.getString("TEUR_K"));
-        setKR_KURS_TEUR_ENG_K(rs.getString("TEUR_ENG_K"));
-        setKR_KURS_TEUR_KURS(rs.getString("TEUR_KURS"));
-        setKR_KURS_TEUR_ENG(rs.getString("TEUR_ENG"));
+        setKR_KURS_K_KURS(rs.getString("kr_K_KURS"));
+        setKR_KURS_TEUR_K(rs.getString("kr_TEUR_K"));
+        setKR_KURS_TEUR_ENG_K(rs.getString("kr_TEUR_ENG_K"));
+        setKR_KURS_TEUR_KURS(rs.getString("kr_TEUR_KURS"));
+        setKR_KURS_TEUR_ENG(rs.getString("kr_TEUR_ENG"));
         setTL_KURS_KVUTZA(rs.getString("KVUTZA"));
         setKR_KURS_OFEN_HORAA1(rs.getString("OFEN_HORAA1"));
-        setTB_002_OFEN_HORAA_TEUR_K1(rs.getString("TEUR_K1"));
-        setTB_002_OFEN_HORAA_TEUR_ENG_K1(rs.getString("TEUR_ENG_K1"));
+        setTB_002_OFEN_HORAA_TEUR_K1(rs.getString("t002_TEUR_K1"));
+        setTB_002_OFEN_HORAA_TEUR_ENG_K1(rs.getString("t002_TEUR_ENG_K1"));
         setPortal_Calendary_View_SEM_KVUTZA_V_DATE(rs.getString("V_DATE"));
         setPortal_Calendary_View_SEM_KVUTZA_V_START(rs.getString("V_START"));
         setPortal_Calendary_View_SEM_KVUTZA_V_END(rs.getString("V_END"));
-        setTB_962_TOAR_MORE_TEUR_K(rs.getString("TEUR_K"));
-        setTB_962_TOAR_MORE_TEUR_ENG_K(rs.getString("TEUR_ENG_K"));
+        setTB_962_TOAR_MORE_TEUR_K(rs.getString("t962_TEUR_K"));
+        setTB_962_TOAR_MORE_TEUR_ENG_K(rs.getString("t962_TEUR_ENG_K"));
         setTA_PERSON_SHEM_PRATI(rs.getString("SHEM_PRATI"));
         setTA_PERSON_SHEM_EMTZAI(rs.getString("SHEM_EMTZAI"));
         setTA_PERSON_SHEM_MISHP(rs.getString("SHEM_MISHP"));
         setTA_PERSON_SHEM_PRATI_ENG(rs.getString("SHEM_PRATI_ENG"));
         setTA_PERSON_SHEM_EMTZAI_ENG(rs.getString("SHEM_EMTZAI_ENG"));
         setTA_PERSON_SHEM_MISHP_ENG(rs.getString("SHEM_MISHP_ENG"));
-        setTB_911_BINYAN_TEUR_K(rs.getString("TEUR_K"));
-        setTB_911_BINYAN_TEUR_ENG_K(rs.getString("TEUR_ENG_K"));
+
+        if (rs.getString("t911_TEUR_K") == null)
+            setTB_911_BINYAN_TEUR_K(" ");
+        else
+            setTB_911_BINYAN_TEUR_K(rs.getString("t911_TEUR_K"));
+
+        if (rs.getString("t911_TEUR_ENG_K") == null)
+            setTB_911_BINYAN_TEUR_ENG_K(" ");
+        else
+            setTB_911_BINYAN_TEUR_ENG_K(rs.getString("t911_TEUR_ENG_K"));
+
         setTB_911_BINYAN_NZ_ORECH(rs.getString("NZ_ORECH"));
         setTB_911_BINYAN_NZ_ROHAV(rs.getString("NZ_ROHAV"));
         setPortal_Calendary_View_ROOM(rs.getString("ROOM"));

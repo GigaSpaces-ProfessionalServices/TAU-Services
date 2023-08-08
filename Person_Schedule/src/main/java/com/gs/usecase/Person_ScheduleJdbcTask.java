@@ -15,28 +15,28 @@ public class Person_ScheduleJdbcTask extends GeneralTask<Person_ScheduleRequest,
     static private final String USECASE_QUERY ="SELECT\n" +
     "tlkr.K_PNIMI,\n" +
     "concat(glb.V_YEAR,glb.SEMESTER) SEM_KVUTZA,\n" +
-    "kr.K_KURS,\n" +
-    "kr.TEUR_K,\n" +
-    "kr.TEUR_ENG_K,\n" +
-    "kr.TEUR_KURS,\n" +
-    "kr.TEUR_ENG,\n" +
+    "kr.K_KURS kr_K_KURS,\n" +
+    "kr.TEUR_K kr_TEUR_K,\n" +
+    "kr.TEUR_ENG_K kr_TEUR_ENG_K,\n" +
+    "kr.TEUR_KURS kr_TEUR_KURS,\n" +
+    "kr.TEUR_ENG kr_TEUR_ENG,\n" +
     "tlkr.KVUTZA,\n" +
     "kr.OFEN_HORAA1,\n" +
-    "t002.TEUR_K1,\n" +
-    "t002.TEUR_ENG_K1,\n" +
+    "t002.TEUR_K1 t002_TEUR_K1,\n" +
+    "t002.TEUR_ENG_K1 t002_TEUR_ENG_K1,\n" +
     "glb.V_DATE,\n" +
     "glb.V_START,\n" +
     "glb.V_END,\n" +
-    "t962.TEUR_K,\n" +
-    "t962.TEUR_ENG_K,\n" +
+    "t962.TEUR_K t962_TEUR_K,\n" +
+    "t962.TEUR_ENG_K t962_TEUR_ENG_K,\n" +
     "pr.SHEM_PRATI,\n" +
     "pr.SHEM_EMTZAI,\n" +
     "pr.SHEM_MISHP,\n" +
     "pr.SHEM_PRATI_ENG,\n" +
     "pr.SHEM_EMTZAI_ENG,\n" +
     "pr.SHEM_MISHP_ENG,\n" +
-    "t911.TEUR_K,\n" +
-    "t911.TEUR_ENG_K,\n" +
+    "t911.TEUR_K t911_TEUR_K,\n" +
+    "t911.TEUR_ENG_K t911_TEUR_ENG_K,\n" +
     "t911.NZ_ORECH,\n" +
     "t911.NZ_ROHAV,\n" +
     "glb.room,\n" +
@@ -45,7 +45,8 @@ public class Person_ScheduleJdbcTask extends GeneralTask<Person_ScheduleRequest,
     "JOIN STUD.TB_002_OFEN_HORAA t002\n" + // t002 - 20
     "on kr.OFEN_HORAA1 = t002.K_CODE\n" +
     "JOIN dbo.Portal_Calendary_View glb on kr.K_KURS = glb.course_ID\n" + // glb - 270k
-    "JOIN STUD.TA_PERSON pr ON pr.IDNO = glb.lecturer\n" + // person - 560k
+    "JOIN STUD.TA_PERSON pr\n" +
+    "ON pr.IDNO = glb.lecturer AND pr.MORE='01'\n" + // person - 560k
     "JOIN STUD.TB_962_TOAR_MORE t962 on pr.TOAR_SHEM = t962.K_CODE\n" + // t962 - 13
     "JOIN STUD.TB_911_BINYAN t911 on glb.building = t911.K_CODE\n" + // t911 - 250
     "JOIN (SELECT K_PNIMI,KVUTZA,K_SEM,K_KURS,SEM_KVUTZA FROM STUD.TL_KURS WHERE K_PNIMI = %s AND MEVUTAL = '0') tlkr\n" + // tlkr - total 12M, We bring 160K for 5 years
