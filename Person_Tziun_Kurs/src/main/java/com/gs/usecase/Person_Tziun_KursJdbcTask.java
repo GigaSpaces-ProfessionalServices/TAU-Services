@@ -175,13 +175,12 @@ public class Person_Tziun_KursJdbcTask extends GeneralTask<Person_Tziun_KursRequ
 
             ResultSetMetaData rsmd = resultSet.getMetaData();
             int columnsNumber = rsmd.getColumnCount();
-           // List<String> rows = new ArrayList<>();
+
             for (int k=1; k<= columnsNumber; k++) {
-            if (k > 1) System.out.print(",  ");
-            logger.debug(rsmd.getColumnName(k));
-           // int ti = rsmd.getColumnType(k);
-            logger.debug("ClassName" + rsmd.getColumnClassName(k));
-}
+                if (k > 1) logger.debug(",  ");
+                logger.debug(rsmd.getColumnName(k));
+                logger.debug("ClassName" + rsmd.getColumnClassName(k));
+            }
 
                  //resultSet = preparedStatement.executeQuery();
                 logger.info("##### Got the resultSet ##### " + resultSet);
