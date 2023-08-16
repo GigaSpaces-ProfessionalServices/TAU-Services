@@ -102,7 +102,7 @@ pipeline {
                                                 if(ACTION.equals("Create")) {
                                                     inputBox = "<input name=\'value\' class=\'setting-input\' type=\'text\'>"
                                                     return inputBox
-                                                } else if(ACTION.equals("Deploy")){ return ["This parameter is not applicable for service deployment"]}'''
+                                                } else if(ACTION.equals("Deploy")){ return [" *** this parameter is not applicable for service deployment *** "]}'''
                                             ]
                                         ]
                                     ],
