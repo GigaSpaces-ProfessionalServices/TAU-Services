@@ -102,7 +102,7 @@ pipeline {
                                                 if(ACTION.equals("Create")) {
                                                     inputBox = "<input name=\'value\' class=\'setting-input\' type=\'text\'>"
                                                     return inputBox
-                                                } else if(ACTION.equals("Deploy")){ return [" *** this parameter is not applicable for service deployment *** "]}'''
+                                                } else if(ACTION.equals("Deploy")){ return ["Not applicable for Deploy action"]}'''
                                             ]
                                         ]
                                     ],
@@ -170,7 +170,8 @@ pipeline {
                                                     return exitcode
                                                 }
                                                 //println output.split()
-                                                return output.tokenize('\n')
+                                                //return output.tokenize('\n')
+                                                return output.join('\n')
                                                 '''
 
                                                 // script: '''def branches = []
@@ -201,16 +202,31 @@ pipeline {
                             )
                         ]
                     )
-                echo ENV
-                echo BRANCH
+                //echo ENV
+                //echo BRANCH
                 }
             }
         }
         stage('User Selections') {
             steps {
                 script {
-                    def branches = sh(script: 'git branch -r')
-                    echo branches
+                    // def branches = sh(script: 'git branch -r')
+                    // echo branches
+
+                    def command = 'echo "Hello, world!"'  // Replace with your Groovy shell command
+                    def outputFile = new File('output.txt')
+
+                    def processBuilder = new ProcessBuilder('/bin/bash', '-c', command)
+                    processBuilder.redirectOutput(ProcessBuilder.Redirect.to(outputFile))
+                    def process = processBuilder.start()
+                    process.waitFor()
+
+                    if (outputFile.exists()) {
+                    def outputContent = outputFile.text
+                    println "Command output:\n${outputContent}"
+                    } else {
+                    println "Output file not found."
+                    }
                 }
             }
         }
