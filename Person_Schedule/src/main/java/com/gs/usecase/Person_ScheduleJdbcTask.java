@@ -73,7 +73,9 @@ public class Person_ScheduleJdbcTask extends GeneralTask<Person_ScheduleRequest,
         ArrayList<Person_ScheduleResponse> responseList = new ArrayList<>();
 
         Properties props = new Properties();
-        props.put("com.gs.embeddedQP.enabled", "false");
+        props.put("com.gs.embeddedQP.enabled", "true");
+
+        long startTime = 0;
 
         try (Connection con = DriverManager.getConnection(properties.getProperty("driverurl"),props)) {
 
@@ -82,7 +84,10 @@ public class Person_ScheduleJdbcTask extends GeneralTask<Person_ScheduleRequest,
             logger.info("query = " + query);
 
             try {
+                startTime = System.currentTimeMillis();
                 resultSet = stmt.executeQuery(query);
+                long endTime = System.currentTimeMillis();
+                logger.info("##### query took " + String.valueOf(endTime - startTime));
                 logger.info("##### Got the resultSet ##### " + resultSet);
             }catch(Throwable e){
                 logger.error("##### Got Exception while on stmt.executeQuery(query) ##### " + e);
@@ -102,6 +107,10 @@ public class Person_ScheduleJdbcTask extends GeneralTask<Person_ScheduleRequest,
             logger.error("Cannot query database ", sqlException);
             return null;
         }
+
+        long executeEnd = System.currentTimeMillis();
+        logger.info("##### query took " + String.valueOf(executeEnd - startTime));
+
         return responseList;
     }
 }

@@ -24,7 +24,7 @@ public class Person_TuitionServerMapping extends ServerMapping {
     public String generateSwagger(){
         return SwaggerGenerator.generate("Person_Tuition","Person_Tuition",getEndpoint(),
                                         "Person_Tuition", port,
-        Person_TuitionRequest.class, Person_TuitionResponse.class);
+        Person_TuitionRequest.class, Person_TuitionResponseMain.class);
         }
 
 

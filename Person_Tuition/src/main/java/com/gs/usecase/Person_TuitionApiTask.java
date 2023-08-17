@@ -3,13 +3,14 @@ package com.gs.usecase;
 
 import java.util.ArrayList;
 import com.gs.infra.service.GeneralTask;
+import com.gs.infra.service.ServiceResponse;
 import org.openspaces.core.executor.Task;
 
 
 /*
 This class is not in use. We are using JDBC
  */
-public class Person_TuitionApiTask extends GeneralTask<Person_TuitionRequest, Person_TuitionResponse> implements Task<ArrayList<Person_TuitionResponse>> {
+public class Person_TuitionApiTask extends GeneralTask<Person_TuitionRequest, ServiceResponse> implements Task<ArrayList<ServiceResponse>> {
 
 
     @Override
@@ -18,7 +19,7 @@ public class Person_TuitionApiTask extends GeneralTask<Person_TuitionRequest, Pe
     }
 
     @Override
-    public ArrayList<Person_TuitionResponse> execute() {
+    public ArrayList<ServiceResponse> execute() {
         return null;
     }
 }
