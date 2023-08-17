@@ -214,7 +214,7 @@ pipeline {
                     // echo branches
 
                     def command = 'echo "Hello, world!"'  // Replace with your Groovy shell command
-                    def outputFile = new File('output.txt')
+                    def outputFile = new File('/tmp/output.txt')
 
                     def processBuilder = new ProcessBuilder('/bin/bash', '-c', command)
                     processBuilder.redirectOutput(ProcessBuilder.Redirect.to(outputFile))
