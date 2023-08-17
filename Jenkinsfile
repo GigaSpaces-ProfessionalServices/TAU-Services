@@ -222,9 +222,10 @@ return output.join()
                 }
             }
         }
-        // stage('User Selections') {
-        //     steps {
-        //         script {
+        stage('User Selections') {
+            steps {
+                script {
+                    println WORKSPACE
         //             // def branches = sh(script: 'git branch -r')
         //             // echo branches
 
@@ -242,9 +243,9 @@ return output.join()
         //             } else {
         //             println "Output file not found."
         //             }
-        //         }
-        //     }
-        // }
+                }
+            }
+        }
     
         // stage('Service Creation') {
         //     when {
