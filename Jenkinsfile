@@ -216,29 +216,29 @@ return output.join('\\n')
                 }
             }
         }
-        stage('User Selections') {
-            steps {
-                script {
-                    // def branches = sh(script: 'git branch -r')
-                    // echo branches
+        // stage('User Selections') {
+        //     steps {
+        //         script {
+        //             // def branches = sh(script: 'git branch -r')
+        //             // echo branches
 
-                    def command = 'echo "Hello, world!"'  // Replace with your Groovy shell command
-                    def outputFile = new File('/tmp/output.txt')
+        //             def command = 'echo "Hello, world!"'  // Replace with your Groovy shell command
+        //             def outputFile = new File('/tmp/output.txt')
 
-                    def processBuilder = new ProcessBuilder('/bin/bash', '-c', command)
-                    processBuilder.redirectOutput(ProcessBuilder.Redirect.to(outputFile))
-                    def process = processBuilder.start()
-                    process.waitFor()
+        //             def processBuilder = new ProcessBuilder('/bin/bash', '-c', command)
+        //             processBuilder.redirectOutput(ProcessBuilder.Redirect.to(outputFile))
+        //             def process = processBuilder.start()
+        //             process.waitFor()
 
-                    if (outputFile.exists()) {
-                    def outputContent = outputFile.text
-                    println "Command output:\n${outputContent}"
-                    } else {
-                    println "Output file not found."
-                    }
-                }
-            }
-        }
+        //             if (outputFile.exists()) {
+        //             def outputContent = outputFile.text
+        //             println "Command output:\n${outputContent}"
+        //             } else {
+        //             println "Output file not found."
+        //             }
+        //         }
+        //     }
+        // }
     
         // stage('Service Creation') {
         //     when {
