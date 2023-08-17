@@ -159,7 +159,7 @@ pipeline {
                                                 // return choices
                                                 // '''
                                                 script: '''
-def git_cmd = 'git branch -r'
+def git_cmd = 'echo $WORKSPACE'
 def outputFile = new File('/tmp/output.txt')
 
 def processBuilder = new ProcessBuilder('/bin/bash', '-c', git_cmd)
