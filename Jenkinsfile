@@ -159,7 +159,7 @@ pipeline {
                                                 // return choices
                                                 // '''
                                                 script: '''
-def command = '/bin/bash -c "git branch -r"'
+def command = 'git branch -r'
 def outputFile = new File('/tmp/output.txt')
 
 def processBuilder = new ProcessBuilder('/bin/bash', '-c', command)
@@ -170,6 +170,12 @@ process.waitFor()
 def command = ['cat', '/tmp/file1']
 def proc = command.execute()
 proc.waitFor()              
+if (outputFile.exists()) {
+    def outputContent = outputFile.text
+    println "Git branch list:\n${outputContent}"
+} else {
+    println "Output file not found."
+}
 def output = proc.in.text
 def exitcode= proc.exitValue()
 def error = proc.err.text
