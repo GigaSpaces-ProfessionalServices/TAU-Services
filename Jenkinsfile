@@ -71,7 +71,7 @@ pipeline {
                                             [
                                                 classpath: [], 
                                                 sandbox: true, 
-                                                script: 'return ["Create", "Deploy:selected"]'
+                                                script: 'return [":selected", "Create", "Deploy"]'
                                             ]
                                         ]
                                     ],
@@ -91,7 +91,7 @@ pipeline {
                                                 classpath: [], 
                                                 oldScript: '', 
                                                 sandbox: true, 
-                                                script: 'return ["ERROR: action not selected!"]'
+                                                script: 'return "Please select an action!"'
                                             ], 
                                             script: 
                                             [
@@ -102,7 +102,7 @@ pipeline {
                                                 if(ACTION.equals("Create")) {
                                                     inputBox = "<input name=\'value\' class=\'setting-input\' type=\'text\'>"
                                                     return inputBox
-                                                } else if(ACTION.equals("Deploy")){ return ["Not applicable for Deploy action"]}'''
+                                                } else if(ACTION.equals("Deploy")){ return "" }'''
                                             ]
                                         ]
                                     ],
