@@ -78,7 +78,7 @@ pipeline {
                                     [
                                         $class: 'DynamicReferenceParameter', 
                                         choiceType: 'ET_FORMATTED_HTML', 
-                                        description: 'Enter a service name for the new service', 
+                                        description: 'Enter a service name for the new service (not applicable for deploy action)', 
                                         name: 'SERVICE_NAME', 
                                         omitValueField: false, 
                                         randomName: 'choice-parameter-4155200957257890', 
@@ -158,21 +158,30 @@ pipeline {
                                                 // }
                                                 // return choices
                                                 // '''
-                                                script: '''def command = ['cat', '/tmp/file1']
-                                                def proc = command.execute()
-                                                proc.waitFor()              
-                                                def output = proc.in.text
-                                                def exitcode= proc.exitValue()
-                                                def error = proc.err.text
-                                                if (error) {
-                                                    println "Std Err: ${error}"
-                                                    println "Process exit code: ${exitcode}"
-                                                    return exitcode
-                                                }
-                                                //println output.split()
-                                                //return output.tokenize()
-                                                return output.join()
-                                                '''
+                                                script: '''
+def command = 'echo "Hello, world!"'
+def outputFile = new File('/tmp/output.txt')
+
+def processBuilder = new ProcessBuilder('/bin/bash', '-c', command)
+processBuilder.redirectOutput(ProcessBuilder.Redirect.to(outputFile))
+def process = processBuilder.start()
+process.waitFor()
+
+def command = ['cat', '/tmp/file1']
+def proc = command.execute()
+proc.waitFor()              
+def output = proc.in.text
+def exitcode= proc.exitValue()
+def error = proc.err.text
+if (error) {
+    println "Std Err: ${error}"
+    println "Process exit code: ${exitcode}"
+    return exitcode
+}
+//println output.split()
+//return output.tokenize('\\n')
+return output.join('\\n')
+'''
 
                                                 // script: '''def branches = []
                                                 // def gitBranches = 'git branch -r'.execute().text
