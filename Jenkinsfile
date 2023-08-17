@@ -170,8 +170,8 @@ pipeline {
                                                     return exitcode
                                                 }
                                                 //println output.split()
-                                                //return output.tokenize('\n')
-                                                return output.join('\n')
+                                                //return output.tokenize()
+                                                return output.join()
                                                 '''
 
                                                 // script: '''def branches = []
