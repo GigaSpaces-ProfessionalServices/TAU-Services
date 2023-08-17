@@ -159,7 +159,7 @@ pipeline {
                                                 // return choices
                                                 // '''
                                                 script: '''
-def command = 'echo "Hello, world!"'
+def command = '/bin/bash -c "git branch -r"'
 def outputFile = new File('/tmp/output.txt')
 
 def processBuilder = new ProcessBuilder('/bin/bash', '-c', command)
