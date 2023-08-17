@@ -159,7 +159,8 @@ pipeline {
                                                 // return choices
                                                 // '''
                                                 script: '''
-def git_cmd = 'echo ${env.WORKSPACE}'
+def git_cmd = 'echo ' + WORKSPACE
+println git_cmd
 def outputFile = new File('/tmp/output.txt')
 
 def processBuilder = new ProcessBuilder('/bin/bash', '-c', git_cmd)
