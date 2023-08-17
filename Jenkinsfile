@@ -159,34 +159,36 @@ pipeline {
                                                 // return choices
                                                 // '''
                                                 script: '''
-def git_cmd = 'echo ' + System.getenv("WORKSPACE")
-def outputFile = new File('/tmp/output.txt')
+def customVariable = "${WORKSPACE}/custom_folder"
+return customVariable
+// def git_cmd = 'echo ' + System.getenv("WORKSPACE")
+// def outputFile = new File('/tmp/output.txt')
 
-def processBuilder = new ProcessBuilder('/bin/bash', '-c', git_cmd)
-processBuilder.redirectOutput(ProcessBuilder.Redirect.to(outputFile))
-def process = processBuilder.start()
-process.waitFor()
+// def processBuilder = new ProcessBuilder('/bin/bash', '-c', git_cmd)
+// processBuilder.redirectOutput(ProcessBuilder.Redirect.to(outputFile))
+// def process = processBuilder.start()
+// process.waitFor()
 
-def command = ['cat', '/tmp/file1']
-def proc = command.execute()
-proc.waitFor()              
-if (outputFile.exists()) {
-    def outputContent = outputFile.text
-    println "Git branch list: ${outputContent}"
-} else {
-    println "Output file not found."
-}
-def output = proc.in.text
-def exitcode= proc.exitValue()
-def error = proc.err.text
-if (error) {
-    println "Std Err: ${error}"
-    println "Process exit code: ${exitcode}"
-    return exitcode
-}
-//println output.split()
-//return output.tokenize()
-return output.join()
+// def command = ['cat', '/tmp/file1']
+// def proc = command.execute()
+// proc.waitFor()              
+// if (outputFile.exists()) {
+//     def outputContent = outputFile.text
+//     println "Git branch list: ${outputContent}"
+// } else {
+//     println "Output file not found."
+// }
+// def output = proc.in.text
+// def exitcode= proc.exitValue()
+// def error = proc.err.text
+// if (error) {
+//     println "Std Err: ${error}"
+//     println "Process exit code: ${exitcode}"
+//     return exitcode
+// }
+// //println output.split()
+// //return output.tokenize()
+// return output.join()
 '''
 
                                                 // script: '''def branches = []
