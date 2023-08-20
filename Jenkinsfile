@@ -149,29 +149,29 @@ pipeline {
                                             [
                                                 classpath: [], 
                                                 sandbox: true, 
-                                                // script: '''def choices = []
-                                                // def processBuilder = new ProcessBuilder('/bin/bash', '-c', 'echo "Option 1" && echo "Option 2" && echo "Option 3"')
-                                                // def process = processBuilder.start()
-                                                // process.waitFor()
-                                                // process.in.eachLine { line ->
-                                                //     choices.add(line.trim())
-                                                // }
-                                                // return choices
-                                                // '''
-                                                script: '''def command = ['cat', '/tmp/file1']
-                                                def proc = command.execute()
-                                                proc.waitFor()              
-                                                def output = proc.in.text
-                                                def exitcode= proc.exitValue()
-                                                def error = proc.err.text
-                                                if (error) {
-                                                    println "Std Err: ${error}"
-                                                    println "Process exit code: ${exitcode}"
-                                                    return exitcode
+                                                script: '''def choices = []
+                                                def processBuilder = new ProcessBuilder('/bin/bash', '-c', 'echo "Option 1" && echo "Option 2" && echo "Option 3"')
+                                                def process = processBuilder.start()
+                                                process.waitFor()
+                                                process.in.eachLine { line ->
+                                                    choices.add(line.trim())
                                                 }
-                                                //println output.split()
-                                                return output.tokenize('\n')
+                                                return choices
                                                 '''
+                                                // script: '''def command = ['cat', '/tmp/file1']
+                                                // def proc = command.execute()
+                                                // proc.waitFor()              
+                                                // def output = proc.in.text
+                                                // def exitcode= proc.exitValue()
+                                                // def error = proc.err.text
+                                                // if (error) {
+                                                //     println "Std Err: ${error}"
+                                                //     println "Process exit code: ${exitcode}"
+                                                //     return exitcode
+                                                // }
+                                                // //println output.split()
+                                                // return output.tokenize('\n')
+                                                // '''
 
                                                 // script: '''def branches = []
                                                 // def gitBranches = 'git branch -r'.execute().text
