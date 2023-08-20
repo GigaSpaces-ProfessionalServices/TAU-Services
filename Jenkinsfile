@@ -131,38 +131,6 @@ pipeline {
                                         ]
                                     ],
                                     [
-                                        $class: 'ChoiceParameter', 
-                                        choiceType: 'PT_SINGLE_SELECT', 
-                                        description: 'Select', 
-                                        filterLength: 1, 
-                                        filterable: false, 
-                                        name: 'EXAMPLE', 
-                                        script: 
-                                        [
-                                            $class: 'GroovyScript', 
-                                            fallbackScript: 
-                                            [
-                                                classpath: [], 
-                                                sandbox: true, 
-                                                script: 'return ["Could not get environment"]'
-                                            ], 
-                                            script: 
-                                            [
-                                                classpath: [], 
-                                                sandbox: true, 
-                                                script: '''def choices = []
-                                                def processBuilder = new ProcessBuilder('/bin/bash', '-c', 'echo "Option 1" && echo "Option 2" && echo "Option 3"')
-                                                def process = processBuilder.start()
-                                                process.waitFor()
-                                                process.in.eachLine { line ->
-                                                choices.add(line.trim())
-                                                }
-                                                return choices
-                                                '''
-                                            ]
-                                        ]
-                                    ],
-                                    [
                                         $class: 'CascadeChoiceParameter', 
                                         choiceType: 'PT_SINGLE_SELECT', 
                                         description: 'Select the branch from the dropdown List',
