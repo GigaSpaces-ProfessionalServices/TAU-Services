@@ -149,47 +149,46 @@ pipeline {
                                             [
                                                 classpath: [], 
                                                 sandbox: true, 
-                                                script: '''def choices = []
-def processBuilder = new ProcessBuilder('/bin/bash', '-c', 'echo "Option 1" && echo "Option 2" && echo "Option 3"')
-def process = processBuilder.start()
-process.waitFor()
-process.in.eachLine { line ->
-choices.add(line.trim())
-}
-return choices
-'''
-                                                // script: '''
-                                                // def customVariable = "${WORKSPACE}/custom_folder"
-                                                // return customVariable
-                                                // def git_cmd = 'echo ' + System.getenv("WORKSPACE")
-                                                // def outputFile = new File('/tmp/output.txt')
-
-                                                // def processBuilder = new ProcessBuilder('/bin/bash', '-c', git_cmd)
-                                                // processBuilder.redirectOutput(ProcessBuilder.Redirect.to(outputFile))
+                                                // script: '''def choices = []
+                                                // def processBuilder = new ProcessBuilder('/bin/bash', '-c', 'echo "Option 1" && echo "Option 2" && echo "Option 3"')
                                                 // def process = processBuilder.start()
                                                 // process.waitFor()
+                                                // process.in.eachLine { line ->
+                                                // choices.add(line.trim())
+                                                // }
+                                                // return choices
+                                                // '''
+                                                script: '''
+// def customVariable = "${WORKSPACE}/custom_folder"
+// return customVariable
+// def git_cmd = 'echo ' + System.getenv("WORKSPACE")
+// def outputFile = new File('/tmp/output.txt')
 
-                                                // def command = ['cat', '/tmp/file1']
-                                                // def proc = command.execute()
-                                                // proc.waitFor()              
-                                                // if (outputFile.exists()) {
-                                                //     def outputContent = outputFile.text
-                                                //     println "Git branch list: ${outputContent}"
-                                                // } else {
-                                                //     println "Output file not found."
-                                                // }
-                                                // def output = proc.in.text
-                                                // def exitcode= proc.exitValue()
-                                                // def error = proc.err.text
-                                                // if (error) {
-                                                //     println "Std Err: ${error}"
-                                                //     println "Process exit code: ${exitcode}"
-                                                //     return exitcode
-                                                // }
-                                                // //println output.split()
-                                                // //return output.tokenize()
-                                                // return output.join()
-                                                //'''
+// def processBuilder = new ProcessBuilder('/bin/bash', '-c', git_cmd)
+// processBuilder.redirectOutput(ProcessBuilder.Redirect.to(outputFile))
+// def process = processBuilder.start()
+// process.waitFor()
+
+def command = ['cat', '/tmp/file1']
+def proc = command.execute()
+proc.waitFor()              
+if (outputFile.exists()) {
+def outputContent = outputFile.text
+println "Git branch list: ${outputContent}"
+} else {
+println "Output file not found."
+}
+def output = proc.in.text
+def exitcode= proc.exitValue()
+def error = proc.err.text
+if (error) {
+println "Std Err: ${error}"
+println "Process exit code: ${exitcode}"
+return exitcode
+}
+//println output.split()
+return output
+'''
 
                                                 // script: '''def branches = []
                                                 // def gitBranches = 'git branch -r'.execute().text
