@@ -149,18 +149,18 @@ pipeline {
                                             [
                                                 classpath: [], 
                                                 sandbox: true, 
-                                                // script: '''def choices = []
-                                                // def processBuilder = new ProcessBuilder('/bin/bash', '-c', 'echo "Option 1" && echo "Option 2" && echo "Option 3"')
-                                                // def process = processBuilder.start()
-                                                // process.waitFor()
-                                                // process.in.eachLine { line ->
-                                                //     choices.add(line.trim())
-                                                // }
-                                                // return choices
-                                                // '''
-                                                script: '''
-def customVariable = "${WORKSPACE}/custom_folder"
-return customVariable
+                                                script: '''def choices = []
+def processBuilder = new ProcessBuilder('/bin/bash', '-c', 'echo "Option 1" && echo "Option 2" && echo "Option 3"')
+def process = processBuilder.start()
+process.waitFor()
+process.in.eachLine { line ->
+choices.add(line.trim())
+}
+return choices
+'''
+                                                // script: '''
+                                                // def customVariable = "${WORKSPACE}/custom_folder"
+                                                // return customVariable
                                                 // def git_cmd = 'echo ' + System.getenv("WORKSPACE")
                                                 // def outputFile = new File('/tmp/output.txt')
 
@@ -189,7 +189,7 @@ return customVariable
                                                 // //println output.split()
                                                 // //return output.tokenize()
                                                 // return output.join()
-'''
+                                                //'''
 
                                                 // script: '''def branches = []
                                                 // def gitBranches = 'git branch -r'.execute().text
