@@ -244,10 +244,13 @@ return output
                 }
             }
         }
-        // stage('User Selections') {
-        //     steps {
-        //         script {
-        //             println WORKSPACE
+        stage('User Selections') {
+            steps {
+                script {
+                    sh "git --help"
+                }
+            }
+        }
         //             // def branches = sh(script: 'git branch -r')
         //             // echo branches
 
