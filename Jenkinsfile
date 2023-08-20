@@ -35,7 +35,28 @@ pipeline {
                                             [
                                                 classpath: [], 
                                                 sandbox: true, 
-                                                script: 'return [":selected", "Create", "Deploy"]'
+                                                script: '''
+                                                def command = ['cat', '/tmp/file1']
+                                                def proc = command.execute()
+                                                proc.waitFor()              
+                                                if (outputFile.exists()) {
+                                                    def outputContent = outputFile.text
+                                                    println "Git branch list: ${outputContent}"
+                                                } else {
+                                                    println "Output file not found."
+                                                }
+                                                def output = proc.in.text
+                                                def exitcode= proc.exitValue()
+                                                def error = proc.err.text
+                                                if (error) {
+                                                    println "Std Err: ${error}"
+                                                    println "Process exit code: ${exitcode}"
+                                                    return exitcode
+                                                }
+                                                //println output.split()
+                                                //return output.tokenize()
+                                                return output.join()
+                                                '''
                                             ]
                                         ]
                                     ]
