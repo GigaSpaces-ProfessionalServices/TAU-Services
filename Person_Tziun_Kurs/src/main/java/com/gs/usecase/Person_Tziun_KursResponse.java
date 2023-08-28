@@ -2,6 +2,7 @@ package com.gs.usecase;
 
 import com.gs.infra.service.ServiceResponse;
 import com.gigaspaces.document.SpaceDocument;
+import io.swagger.models.auth.In;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +18,7 @@ public class Person_Tziun_KursResponse implements ServiceResponse {
 
     public Person_Tziun_KursResponse(ResultSet rs) throws SQLException {
 
-        setTL_KURS_K_PNIMI(rs.getBigDecimal("K_PNIMI"));
+        setTL_KURS_K_PNIMI(rs.getInt("K_PNIMI"));
         setTA_PERSON_IDNO(rs.getString("IDNO"));
         setTA_PERSON_SHEM_MISHP(rs.getString("SHEM_MISHP"));
         setTA_PERSON_SHEM_PRATI(rs.getString("SHEM_PRATI"));
@@ -114,7 +115,7 @@ public class Person_Tziun_KursResponse implements ServiceResponse {
     }
 
 
-    java.math.BigDecimal TL_KURS_K_PNIMI;
+    Integer TL_KURS_K_PNIMI;
     String TA_PERSON_IDNO;
     String TA_PERSON_SHEM_MISHP;
     String TA_PERSON_SHEM_PRATI;
@@ -153,7 +154,7 @@ public class Person_Tziun_KursResponse implements ServiceResponse {
     String T071_TEUR;
     String T071_TEUR_ENG;
 
-    public void setTL_KURS_K_PNIMI(BigDecimal TL_KURS_K_PNIMI) {
+    public void setTL_KURS_K_PNIMI(Integer TL_KURS_K_PNIMI) {
         this.TL_KURS_K_PNIMI = TL_KURS_K_PNIMI;
     }
 

@@ -29,7 +29,7 @@ public class Person_ScheduleServiceCatalogImpl implements ServiceCatalog {
 
 
         JsonArray jsonArray = new JsonArray();
-        jsonArray.add("STUD.TL_KURSN");
+        jsonArray.add("STUD.TL_KURS");
         jsonArray.add("STUD.TA_PERSON");
         jsonArray.add("dbo.Portal_Calendary_View");
         jsonArray.add("STUD.KR_KURS");

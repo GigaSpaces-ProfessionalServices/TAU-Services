@@ -1,8 +1,6 @@
 package com.gs.usecase;
 
 import com.gs.infra.service.ServiceResponse;
-import com.gigaspaces.document.SpaceDocument;
-import java.math.BigDecimal;
 import java.sql.*;
 
 /**
