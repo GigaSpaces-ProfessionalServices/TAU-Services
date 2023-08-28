@@ -71,14 +71,14 @@ pipeline {
                                             [
                                                 classpath: [], 
                                                 sandbox: true, 
-                                                script: 'return ["Create", "Deploy:selected"]'
+                                                script: 'return [":selected", "Create", "Deploy"]'
                                             ]
                                         ]
                                     ],
                                     [
                                         $class: 'DynamicReferenceParameter', 
                                         choiceType: 'ET_FORMATTED_HTML', 
-                                        description: 'Enter a service name for the new service', 
+                                        description: 'Enter a service name for the new service (not applicable for deploy action)', 
                                         name: 'SERVICE_NAME', 
                                         omitValueField: false, 
                                         randomName: 'choice-parameter-4155200957257890', 
@@ -91,7 +91,7 @@ pipeline {
                                                 classpath: [], 
                                                 oldScript: '', 
                                                 sandbox: true, 
-                                                script: 'return ["ERROR: action not selected!"]'
+                                                script: 'return "Please select an action!"'
                                             ], 
                                             script: 
                                             [
@@ -102,7 +102,7 @@ pipeline {
                                                 if(ACTION.equals("Create")) {
                                                     inputBox = "<input name=\'value\' class=\'setting-input\' type=\'text\'>"
                                                     return inputBox
-                                                } else if(ACTION.equals("Deploy")){ return [" *** this parameter is not applicable for service deployment *** "]}'''
+                                                } else if(ACTION.equals("Deploy")){ return "" }'''
                                             ]
                                         ]
                                     ],
@@ -154,24 +154,41 @@ pipeline {
                                                 // def process = processBuilder.start()
                                                 // process.waitFor()
                                                 // process.in.eachLine { line ->
-                                                //     choices.add(line.trim())
+                                                // choices.add(line.trim())
                                                 // }
                                                 // return choices
                                                 // '''
-                                                script: '''def command = ['cat', '/tmp/file1']
-                                                def proc = command.execute()
-                                                proc.waitFor()              
-                                                def output = proc.in.text
-                                                def exitcode= proc.exitValue()
-                                                def error = proc.err.text
-                                                if (error) {
-                                                    println "Std Err: ${error}"
-                                                    println "Process exit code: ${exitcode}"
-                                                    return exitcode
-                                                }
-                                                //println output.split()
-                                                return output.tokenize('\n')
-                                                '''
+                                                script: '''
+// def customVariable = "${WORKSPACE}/custom_folder"
+// return customVariable
+// def git_cmd = 'echo ' + System.getenv("WORKSPACE")
+// def outputFile = new File('/tmp/output.txt')
+
+// def processBuilder = new ProcessBuilder('/bin/bash', '-c', git_cmd)
+// processBuilder.redirectOutput(ProcessBuilder.Redirect.to(outputFile))
+// def process = processBuilder.start()
+// process.waitFor()
+
+def command = ['cat', '/tmp/file1']
+def proc = command.execute()
+proc.waitFor()              
+if (outputFile.exists()) {
+def outputContent = outputFile.text
+println "Git branch list: ${outputContent}"
+} else {
+println "Output file not found."
+}
+def output = proc.in.text
+def exitcode= proc.exitValue()
+def error = proc.err.text
+if (error) {
+println "Std Err: ${error}"
+println "Process exit code: ${exitcode}"
+return exitcode
+}
+//println output.split()
+return output
+'''
 
                                                 // script: '''def branches = []
                                                 // def gitBranches = 'git branch -r'.execute().text
@@ -183,17 +200,6 @@ pipeline {
                                                 // }
                                                 // return branches.join(',')
                                                 // '''
-
-                                                // script: '''def branches = []
-                                                // def gitBranches = 'git branch -r'.execute().text
-                                                // gitBranches.eachLine { line ->
-                                                //     def branch = line.trim()
-                                                //     if (branch.startsWith('origin/')) {
-                                                //         branches.add(branch.substring('origin/'.length()))
-                                                //     }
-                                                // }
-                                                // return branches
-                                                // '''
                                             ]
                                         ]
                                     ]
@@ -201,19 +207,38 @@ pipeline {
                             )
                         ]
                     )
-                echo ENV
-                echo BRANCH
+                //echo ENV
+                //echo BRANCH
                 }
             }
         }
         stage('User Selections') {
             steps {
                 script {
-                    def branches = sh(script: 'git branch -r')
-                    echo branches
+                    sh "git --help"
                 }
             }
         }
+        //             // def branches = sh(script: 'git branch -r')
+        //             // echo branches
+
+        //             def command = 'echo "Hello, world!"'  // Replace with your Groovy shell command
+        //             def outputFile = new File('/tmp/output.txt')
+
+        //             def processBuilder = new ProcessBuilder('/bin/bash', '-c', command)
+        //             processBuilder.redirectOutput(ProcessBuilder.Redirect.to(outputFile))
+        //             def process = processBuilder.start()
+        //             process.waitFor()
+
+        //             if (outputFile.exists()) {
+        //             def outputContent = outputFile.text
+        //             println "Command output:\n${outputContent}"
+        //             } else {
+        //             println "Output file not found."
+        //             }
+        //         }
+        //     }
+        // }
     
         // stage('Service Creation') {
         //     when {
